@@ -9,16 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^7.6.1",
+    "@mantine/dates": "^7.6.1",
+    "@mantine/form": "^7.6.1",
+    "@mantine/hooks": "^7.6.1",
+    "@mantine/tiptap": "^7.6.1",
+    "@mantinex/mantine-logo": "^1.0.1",
+    "@tabler/icons-react": "^2.47.0",
+    "@tiptap/extension-highlight": "^2.2.4",
+    "@tiptap/extension-link": "^2.2.4",
+    "@tiptap/extension-subscript": "^2.2.4",
+    "@tiptap/extension-superscript": "^2.2.4",
+    "@tiptap/extension-text-align": "^2.2.4",
+    "@tiptap/extension-underline": "^2.2.4",
+    "@tiptap/pm": "^2.2.4",
+    "@tiptap/react": "^2.2.4",
+    "@tiptap/starter-kit": "^2.2.4",
+    "dayjs": "^1.11.10",
+    "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.8",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-next": "14.1.0",
+    "postcss-preset-mantine": "^1.13.0",
+    "typescript": "^5"
   }
 }

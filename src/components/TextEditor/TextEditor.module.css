@@ -1,0 +1,39 @@
+.container {
+  /* margin-top: 20px; */
+}
+.editor {
+  min-width: 80vw;
+  margin-top: 10px;
+  width: 90%;
+}
+.titlearea {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 50px;
+}
+.title {
+  width: 30%;
+}
+.editor_content {
+  min-height: 300px;
+}
+.u_editor {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 50px;
+  margin-top: 10px;
+}
+.tag {
+  width: 300px;
+}
+
+.u_btn {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 10px;
+  align-items: end;
+}
+.btn {
+  width: 30%;
+}
