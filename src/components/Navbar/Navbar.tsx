@@ -4,8 +4,9 @@ import classes from "./Navbar.module.css";
 import { Box, Flex, NavLink, TextInput, rem } from "@mantine/core";
 import { FC } from "react";
 import { MemoAppProps } from "@/types";
+import { NextPage } from "next";
 
-export const Navbar: FC<
+export const Navbar: NextPage<
   Pick<MemoAppProps, "FilterItems" | "sendEditor" | "inputSearchValue">
 > = ({ inputSearchValue, FilterItems, sendEditor }) => {
   const links = FilterItems.map((FilterItem) => {

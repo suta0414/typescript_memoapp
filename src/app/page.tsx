@@ -8,8 +8,9 @@ import { Header } from "../components/Header";
 import { FC, useCallback, useEffect, useState } from "react";
 import escapeStringRegexp from "escape-string-regexp";
 import { MemoAppProps } from "@/types";
+import { NextPage } from "next";
 
-const Home: FC<MemoAppProps> = () => {
+const Home = () => {
   const data = [
     { title: "abc", text: "bbb", tags: ["java"], id: "sdfhh" },
     { title: "Notifications", text: "aaa", tags: ["react"], id: "sddd" },
@@ -78,7 +79,7 @@ const Home: FC<MemoAppProps> = () => {
     // ユーザー入力を安全に正規表現にする（このときすべて小文字化で正規化する）
     const searchText = escapeStringRegexp(searchValue.toLowerCase());
     const itemText = escapeStringRegexp(item.title.toLowerCase());
-    // 小文字で比較して部分一致するものだけを残すｙｙｙ
+    // 小文字で比較して部分一致するものだけを残す
     return new RegExp(`^${searchText}`).test(itemText);
   });
 

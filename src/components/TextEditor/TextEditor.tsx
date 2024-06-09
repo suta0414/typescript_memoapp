@@ -14,8 +14,9 @@ import { useEffect, useState } from "react";
 import type { FC } from "react";
 import { MemoAppProps } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import { NextPage } from "next";
 
-export const TextEditor: FC<
+export const TextEditor: NextPage<
   Pick<
     MemoAppProps,
     "handleSubmit" | "listItems" | "resetContent" | "deleteSubmit"
