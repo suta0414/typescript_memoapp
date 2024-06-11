@@ -1,10 +1,7 @@
-.container {
-  /* margin-top: 20px; */
-}
 .editor {
-  min-width: 80vw;
+  min-width: 76vw;
   margin-top: 10px;
-  width: 90%;
+  width: 80%;
 }
 .titlearea {
   display: flex;
@@ -35,5 +32,5 @@
   align-items: end;
 }
 .btn {
-  width: 30%;
+  width: 20%;
 }

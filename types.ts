@@ -1,4 +1,4 @@
-type ListItems = {
+type Items = {
   title?: string;
   text?: string;
   tags?: string[];
@@ -12,20 +12,19 @@ type HandleSubmit = (
   id: string
 ) => void;
 
-type SendEditor = (item: ListItems) => void;
+type SendEditor = (item: Items) => void;
 
-type InputSearchValue = (searchText: string) => void;
+export type InputSearchValue = (searchText: string) => void;
 
 type DeleteSubmit = (idList: string) => void;
 
 type resetContent = () => void;
 
 export type MemoAppProps = {
-  inputSearchValue: InputSearchValue;
   deleteSubmit: DeleteSubmit;
   handleSubmit: HandleSubmit;
-  listItems: ListItems;
-  FilterItems: ListItems[];
+  ListItems: Items[];
+  Items: Items;
   sendEditor: SendEditor;
   resetContent: resetContent;
 };

@@ -1,10 +1,11 @@
 import { Group, Box } from "@mantine/core";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import classes from "./Header.module.css";
-import type { FC } from "react";
+import React from "react";
 import { NextPage } from "next";
 
-export const Header: NextPage = () => {
+// コンポーネントの定義
+const HeaderComponent: NextPage = () => {
   return (
     <header className={classes.header}>
       <Box mx="3rem" my="md">
@@ -15,3 +16,6 @@ export const Header: NextPage = () => {
     </header>
   );
 };
+
+// React.memoを使ってコンポーネントをメモ化
+export const Header: NextPage = React.memo(HeaderComponent);

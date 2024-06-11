@@ -11,17 +11,14 @@ import classes from "./TextEditor.module.css";
 import { Box, Button, TextInput, Textarea } from "@mantine/core";
 import { TagsInput } from "@mantine/core";
 import { useEffect, useState } from "react";
-import type { FC } from "react";
 import { MemoAppProps } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import React from "react";
 import { NextPage } from "next";
 
-export const TextEditor: NextPage<
-  Pick<
-    MemoAppProps,
-    "handleSubmit" | "listItems" | "resetContent" | "deleteSubmit"
-  >
-> = ({ handleSubmit, listItems, resetContent, deleteSubmit }) => {
+const TextEditorComponent: NextPage<
+  Pick<MemoAppProps, "handleSubmit" | "Items" | "resetContent" | "deleteSubmit">
+> = ({ handleSubmit, Items, resetContent, deleteSubmit }) => {
   const [TitleValue, setTitleValue] = useState("");
   const [sentence, setSentence] = useState("");
   const [TagValue, setTagValue] = useState([""]);
@@ -95,11 +92,11 @@ export const TextEditor: NextPage<
   };
 
   useEffect(() => {
-    setTitleValue(listItems.title || "");
-    setSentence(listItems.text || "");
-    setTagValue(listItems.tags || []);
-    setIdList(listItems.id || "");
-  }, [listItems]);
+    setTitleValue(Items.title || "");
+    setSentence(Items.text || "");
+    setTagValue(Items.tags || []);
+    setIdList(Items.id || "");
+  }, [Items]);
 
   return (
     <div className={classes.container}>
@@ -217,3 +214,7 @@ export const TextEditor: NextPage<
     </div>
   );
 };
+
+export const TextEditor: NextPage<
+  Pick<MemoAppProps, "handleSubmit" | "Items" | "resetContent" | "deleteSubmit">
+> = React.memo(TextEditorComponent);
