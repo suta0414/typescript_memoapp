@@ -4,4 +4,11 @@
 }
 .header {
   margin-bottom: 40px;
+  position: relative;
+}
+
+@media screen and (max-width: 1024px) {
+  .header {
+    text-align: center;
+  }
 }

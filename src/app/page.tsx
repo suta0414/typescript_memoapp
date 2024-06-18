@@ -1,12 +1,13 @@
 "use client";
 
 import { MantineProvider } from "@mantine/core";
-import { Navbar } from "../components/Navbar";
-import { Flex } from "@mantine/core";
+import classes from "./page.module.css";
+import { NavbarPC, NavbarSP } from "../components/Navbar";
 import { TextEditor } from "../components/TextEditor";
 import { useCallback, useState } from "react";
 import { MemoAppProps } from "@/types";
 import { NextPage } from "next";
+import { useViewportSize } from "@mantine/hooks";
 
 const Home: NextPage = () => {
   const data = [
@@ -17,8 +18,17 @@ const Home: NextPage = () => {
 
   const [items, setItems] = useState(data);
   const [content, setContent] = useState({});
+  const { height, width } = useViewportSize();
 
-  const handleSubmit: MemoAppProps["handleSubmit"] = (
+  const Navbar = () => {
+    if (width < 1024) {
+      return <NavbarSP ListItems={items} sendEditor={sendEditor} />;
+    } else {
+      return <NavbarPC ListItems={items} sendEditor={sendEditor} />;
+    }
+  };
+
+  const AddItemList: MemoAppProps["AddItemList"] = (
     TitleValue,
     sentence,
     TagValue,
@@ -70,15 +80,15 @@ const Home: NextPage = () => {
 
   return (
     <MantineProvider>
-      <Flex gap="md">
-        <Navbar ListItems={items} sendEditor={sendEditor} />
+      <div className={classes.page_container}>
+        <Navbar></Navbar>
         <TextEditor
-          handleSubmit={handleSubmit}
+          AddItemList={AddItemList}
           Items={content}
           resetContent={resetContent}
           deleteSubmit={deleteSubmit}
         />
-      </Flex>
+      </div>
     </MantineProvider>
   );
 };

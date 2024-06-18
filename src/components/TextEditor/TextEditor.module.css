@@ -26,11 +26,62 @@
 
 .u_btn {
   display: flex;
-  flex-direction: column;
-  gap: 50px;
+  width: 30%;
+  gap: 1rem;
   margin-top: 5px;
-  align-items: end;
 }
 .btn {
-  width: 20%;
+  width: 100%;
+}
+.delbtncontainer {
+  margin: 2rem 50px;
+  text-align: right;
+}
+.addbtn {
+  width: 110px;
+}
+.delbtn {
+  width: 110px;
+}
+
+@media screen and (max-width: 1024px) {
+  .container {
+    width: 96%;
+    margin: 0 auto;
+  }
+  .editor {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .titlearea {
+    width: 100%;
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+  .title {
+    width: 100%;
+  }
+  .u_editor {
+    flex-direction: column;
+    margin-right: 0;
+  }
+  .u_btn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn {
+    margin-top: 1rem;
+  }
+  .delbtncontainer {
+    width: 100%;
+
+    margin: 1rem 0;
+    text-align: right;
+  }
+  .delbtn {
+    width: 30%;
+  }
 }

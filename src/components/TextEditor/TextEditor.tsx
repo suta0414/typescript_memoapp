@@ -1,29 +1,32 @@
-import { RichTextEditor, Link } from "@mantine/tiptap";
-import { useEditor } from "@tiptap/react";
-import Highlight from "@tiptap/extension-highlight";
-import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import Superscript from "@tiptap/extension-superscript";
-import SubScript from "@tiptap/extension-subscript";
+// import { RichTextEditor, Link } from "@mantine/tiptap";
+// import { useEditor } from "@tiptap/react";
+// import Highlight from "@tiptap/extension-highlight";
+// import StarterKit from "@tiptap/starter-kit";
+// import Underline from "@tiptap/extension-underline";
+// import TextAlign from "@tiptap/extension-text-align";
+// import Superscript from "@tiptap/extension-superscript";
+// import SubScript from "@tiptap/extension-subscript";
 
 import classes from "./TextEditor.module.css";
-import { Box, Button, TextInput, Textarea } from "@mantine/core";
+import { Box, Button, Flex, Modal, TextInput, Textarea } from "@mantine/core";
 import { TagsInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { MemoAppProps } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import { NextPage } from "next";
+import { useDisclosure } from "@mantine/hooks";
 
-const TextEditorComponent: NextPage<
-  Pick<MemoAppProps, "handleSubmit" | "Items" | "resetContent" | "deleteSubmit">
-> = ({ handleSubmit, Items, resetContent, deleteSubmit }) => {
+export const TextEditor: NextPage<
+  Pick<MemoAppProps, "AddItemList" | "Items" | "resetContent" | "deleteSubmit">
+> = ({ AddItemList, Items, resetContent, deleteSubmit }) => {
   const [TitleValue, setTitleValue] = useState("");
   const [sentence, setSentence] = useState("");
   const [TagValue, setTagValue] = useState([""]);
   const [tagList, setTagList] = useState(["react", "java"]);
   const [idList, setIdList] = useState("");
+
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const generateRandomID = (): string => {
     return uuidv4();
@@ -66,19 +69,17 @@ const TextEditorComponent: NextPage<
 
   const sendbutton = () => {
     const ID = idcheck(idList);
-    handleSubmit(TitleValue, sentence, TagValue, ID);
+    AddItemList(TitleValue, sentence, TagValue, ID);
     setTitleValue("");
     setSentence("");
     setTagList([...new Set([...tagList, ...TagValue])]);
     setTagValue([]);
-    // setIdList("");
   };
 
   const resetbutton = () => {
     setTitleValue("");
     setSentence("");
     setTagValue([]);
-    // setIdList("");
 
     resetContent();
   };
@@ -111,6 +112,7 @@ const TextEditorComponent: NextPage<
             onChange={(event) => setTitleValue(event.currentTarget.value)}
           />
         </h2>
+
         <Button
           variant="filled"
           size="md"
@@ -188,33 +190,65 @@ const TextEditorComponent: NextPage<
           value={TagValue}
           onChange={setTagValue}
         />
+
+        <Box className={classes.u_btn}>
+          <Button
+            variant="filled"
+            size="lg"
+            radius="sm"
+            color="red"
+            className={classes.btn}
+            onClick={() => sendbutton()}
+          >
+            保存
+          </Button>
+        </Box>
       </Box>
-      <Box className={classes.u_btn}>
+      <Box className={classes.delbtncontainer}>
         <Button
+          onClick={toggle}
           variant="filled"
-          size="lg"
-          radius="sm"
-          color="red"
-          className={classes.btn}
-          onClick={() => sendbutton()}
-        >
-          保存
-        </Button>
-        <Button
-          variant="filled"
-          size="lg"
+          size="md"
           radius="sm"
           color="green"
           className={classes.delbtn}
-          onClick={() => deletebutton()}
         >
           削除
         </Button>
+
+        <Modal
+          opened={opened}
+          onClose={close}
+          title="削除して良いですか？"
+          centered
+        >
+          <Flex justify="center" align="center" gap="lg">
+            <Button
+              variant="filled"
+              size="md"
+              radius="sm"
+              color="red"
+              className={classes.addbtn}
+              onClick={() => {
+                deletebutton();
+                close();
+              }}
+            >
+              はい
+            </Button>
+            <Button
+              variant="filled"
+              size="md"
+              radius="sm"
+              color="blue"
+              className={classes.delbtn}
+              onClick={close}
+            >
+              いいえ
+            </Button>
+          </Flex>
+        </Modal>
       </Box>
     </div>
   );
 };
-
-export const TextEditor: NextPage<
-  Pick<MemoAppProps, "handleSubmit" | "Items" | "resetContent" | "deleteSubmit">
-> = React.memo(TextEditorComponent);
