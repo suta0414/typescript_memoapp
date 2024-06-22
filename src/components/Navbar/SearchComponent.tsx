@@ -7,7 +7,7 @@ import { Box, TextInput, rem } from "@mantine/core";
 import { inputSearchValue } from "@/src/hooks/inputSearchValue";
 import { NextPage } from "next";
 
-export type SearchComponent = {
+type SearchComponent = {
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
 };
