@@ -4,10 +4,11 @@ import { MantineProvider } from "@mantine/core";
 import classes from "./page.module.css";
 import { NavbarPC, NavbarSP } from "../components/Navbar";
 import { TextEditor } from "../components/TextEditor";
-import { useCallback, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import { MemoAppProps } from "@/types";
 import { NextPage } from "next";
 import { useViewportSize } from "@mantine/hooks";
+import Loading from "./loading";
 
 const Home: NextPage = () => {
   const data = [
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
   const [content, setContent] = useState({});
   const { height, width } = useViewportSize();
 
-  const Navbar = () => {
+  const Navbar: NextPage = () => {
     if (width < 1024) {
       return <NavbarSP ListItems={items} sendEditor={sendEditor} />;
     } else {
@@ -81,7 +82,9 @@ const Home: NextPage = () => {
   return (
     <MantineProvider>
       <div className={classes.page_container}>
-        <Navbar></Navbar>
+        <Suspense fallback={<Loading />}>
+          <Navbar></Navbar>
+        </Suspense>
         <TextEditor
           AddItemList={AddItemList}
           Items={content}

@@ -2,16 +2,14 @@ import classes from "./Navbar.module.css";
 import { Burger, Drawer } from "@mantine/core";
 import { useState } from "react";
 
-import { MemoAppProps } from "@/types";
+import { NavbarType } from "@/types";
 import { NextPage } from "next";
 import { useDisclosure } from "@mantine/hooks";
 import { SearchComponent } from "./SearchComponent";
 import { Itemlinks } from "./Itemlinks";
 import { filteredLists } from "@/src/hooks/filteredLists";
 
-export const NavbarSP: NextPage<
-  Pick<MemoAppProps, "ListItems" | "sendEditor">
-> = ({ ListItems, sendEditor }) => {
+export const NavbarSP: NextPage<NavbarType> = ({ ListItems, sendEditor }) => {
   const [searchValue, setSearchValue] = useState("");
   const [
     isHamburgerOpened,

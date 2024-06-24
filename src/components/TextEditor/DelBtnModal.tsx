@@ -4,14 +4,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { NextPage } from "next";
 
 type DelBtnType = {
-  titleValue: string;
+  id: string;
   deletebutton: () => void;
 };
 
-export const DelBtn: NextPage<DelBtnType> = ({ titleValue, deletebutton }) => {
+export const DelBtn: NextPage<DelBtnType> = ({ id, deletebutton }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
-  if (!titleValue) {
+  if (!id) {
     return (
       <Button
         disabled

@@ -18,21 +18,25 @@ type Items = {
   id?: string;
 };
 
+export type MemoAppProps = {
+  AddItemList: AddItemList;
+  resetContent: resetContent;
+  deleteSubmit: DeleteSubmit;
+  sendEditor: SendEditor;
+  Items: Items;
+};
+
 export type filteredListsType = (
   ListItems: Items[],
   searchValue: string
 ) => Items[];
 
-export type Navbar = {
+export type NavbarType = {
   sendEditor: SendEditor;
-  filteredLists: Items[];
+  ListItems: Items[];
 };
 
-export type MemoAppProps = {
-  deleteSubmit: DeleteSubmit;
-  AddItemList: AddItemList;
-  ListItems: Items[];
-  Items: Items;
+export type ItemlinksType = {
   sendEditor: SendEditor;
-  resetContent: resetContent;
+  filteredLists: Items[];
 };

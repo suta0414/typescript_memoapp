@@ -2,15 +2,13 @@ import classes from "./Navbar.module.css";
 import { Flex } from "@mantine/core";
 import { useState } from "react";
 
-import { MemoAppProps } from "@/types";
+import { NavbarType } from "@/types";
 import { NextPage } from "next";
 import { SearchComponent } from "./SearchComponent";
 import { Itemlinks } from "./Itemlinks";
 import { filteredLists } from "@/src/hooks/filteredLists";
 
-export const NavbarPC: NextPage<
-  Pick<MemoAppProps, "ListItems" | "sendEditor">
-> = ({ ListItems, sendEditor }) => {
+export const NavbarPC: NextPage<NavbarType> = ({ ListItems, sendEditor }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (

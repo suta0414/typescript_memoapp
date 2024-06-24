@@ -52,7 +52,7 @@ export const TagArea: NextPage<TagAreaType> = ({
         </Box>
       </Box>
       <Box className={classes.delbtncontainer}>
-        <DelBtn titleValue={titleValue} deletebutton={deletebutton}></DelBtn>
+        <DelBtn id={id} deletebutton={deletebutton}></DelBtn>
       </Box>
     </div>
   );

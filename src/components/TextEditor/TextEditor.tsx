@@ -9,9 +9,12 @@ import { TextArea } from "./TextArea";
 import { TagArea } from "./TagArea";
 import { IdCreate } from "@/src/hooks/IdCreate";
 
-export const TextEditor: NextPage<
-  Pick<MemoAppProps, "AddItemList" | "Items" | "resetContent" | "deleteSubmit">
-> = ({ AddItemList, Items, resetContent, deleteSubmit }) => {
+export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
+  AddItemList,
+  Items,
+  resetContent,
+  deleteSubmit,
+}) => {
   const [titleValue, setTitleValue] = useState("");
   const [tagValue, setTagValue] = useState([""]);
   const [sentence, setSentence] = useState("");
@@ -34,6 +37,7 @@ export const TextEditor: NextPage<
     setSentence("");
     setTagList([...new Set([...tagList, ...tagValue])]);
     setTagValue([]);
+    setId("");
   };
 
   const deletebutton = () => {
@@ -42,6 +46,7 @@ export const TextEditor: NextPage<
     setTitleValue("");
     setSentence("");
     setTagValue([]);
+    setId("");
   };
 
   //   extensions: [

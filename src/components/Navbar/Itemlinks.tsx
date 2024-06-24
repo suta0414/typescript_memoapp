@@ -4,9 +4,12 @@ import classes from "./Navbar.module.css";
 import { NavLink } from "@mantine/core";
 
 import { NextPage } from "next";
-import { Navbar } from "@/types";
+import { ItemlinksType } from "@/types";
 
-export const Itemlinks: NextPage<Navbar> = ({ sendEditor, filteredLists }) => {
+export const Itemlinks: NextPage<ItemlinksType> = ({
+  sendEditor,
+  filteredLists,
+}) => {
   if (!Array.isArray(filteredLists)) {
     return null;
   }
