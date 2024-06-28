@@ -1,9 +1,9 @@
-type AddItemList = (
-  TitleValue: string,
-  sentence: string,
-  TagValue: string[],
-  id: string
-) => void;
+type AddItemList = (ItemList: {
+  titleValue: string;
+  sentence: string;
+  tagValue: string[];
+  ID: string;
+}) => void;
 
 type SendEditor = (item: Items) => void;
 

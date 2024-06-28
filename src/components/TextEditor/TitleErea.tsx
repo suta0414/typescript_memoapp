@@ -14,6 +14,7 @@ type TitleEreaType = {
 
 export const TitleErea: NextPage<TitleEreaType> = ({ Title, resetbutton }) => {
   const { titleValue, setTitleValue } = Title;
+
   return (
     <div className={classes.titlearea}>
       <h2 className={classes.title}>
@@ -32,6 +33,7 @@ export const TitleErea: NextPage<TitleEreaType> = ({ Title, resetbutton }) => {
         size="md"
         radius="sm"
         color="blue"
+        // onClick={() => reset()}
         onClick={() => resetbutton()}
       >
         新規作成

@@ -21,62 +21,60 @@ const Home: NextPage = () => {
   const [content, setContent] = useState({});
   const { height, width } = useViewportSize();
 
-  const Navbar: NextPage = () => {
-    if (width < 1024) {
-      return <NavbarSP ListItems={items} sendEditor={sendEditor} />;
-    } else {
-      return <NavbarPC ListItems={items} sendEditor={sendEditor} />;
-    }
-  };
-
-  const AddItemList: MemoAppProps["AddItemList"] = (
-    TitleValue,
-    sentence,
-    TagValue,
-    Id
-  ) => {
-    const index = items.findIndex((item) => item.id === Id);
+  // エディタの内容をitemsに追加
+  const AddItemList: MemoAppProps["AddItemList"] = (ItemList) => {
+    const { titleValue, sentence, tagValue, ID } = ItemList;
+    const index = items.findIndex((item) => item.id === ID);
     setContent("");
-    if (!TitleValue) TitleValue = "未タイトル";
+
     if (index !== -1) {
       // IDが存在する場合、そのオブジェクトを上書
       items[index] = {
-        title: TitleValue,
+        title: titleValue,
         text: sentence,
-        tags: TagValue,
-        id: Id,
+        tags: tagValue,
+        id: ID,
       };
     } else {
       setItems((prevItems) => {
         return [
           ...prevItems,
           {
-            title: TitleValue,
+            title: titleValue,
             text: sentence,
-            tags: TagValue,
-            id: Id,
+            tags: tagValue,
+            id: ID,
           },
         ];
       });
     }
   };
 
+  // 新規作成を押したとき
   const resetContent: MemoAppProps["resetContent"] = useCallback(() => {
     setContent("");
   }, []);
 
+  // itemsから削除
   const deleteSubmit: MemoAppProps["deleteSubmit"] = (idList) => {
     setContent("");
-    const index = items.findIndex((item) => item.id === idList);
-    if (index !== -1) {
-      setItems((prevItems) => {
-        return prevItems.filter((prevItem) => prevItem !== prevItems[index]);
-      });
-    }
+    setItems((prevItems) => {
+      return prevItems.filter((item) => item.id !== idList);
+    });
   };
 
+  // Navbarの内容をEditorに送る
   const sendEditor: MemoAppProps["sendEditor"] = (item) => {
     setContent(item);
+  };
+
+  // windowサイズで分ける
+  const Navbar: NextPage = () => {
+    if (width < 1024) {
+      return <NavbarSP ListItems={items} sendEditor={sendEditor} />;
+    } else {
+      return <NavbarPC ListItems={items} sendEditor={sendEditor} />;
+    }
   };
 
   return (

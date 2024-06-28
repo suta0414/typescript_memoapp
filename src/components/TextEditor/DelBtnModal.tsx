@@ -11,6 +11,7 @@ type DelBtnType = {
 export const DelBtn: NextPage<DelBtnType> = ({ id, deletebutton }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
+  // Editorでidがない場合削除ボタンをdisabledに
   if (!id) {
     return (
       <Button

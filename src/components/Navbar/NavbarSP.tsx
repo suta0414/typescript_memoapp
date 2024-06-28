@@ -18,11 +18,7 @@ export const NavbarSP: NextPage<NavbarType> = ({ ListItems, sendEditor }) => {
 
   return (
     <div className={classes.sp_navbar_container}>
-      <Burger
-        opened={isHamburgerOpened}
-        onClick={hamburgerToggle}
-        // color="#fff"
-      />
+      <Burger opened={isHamburgerOpened} onClick={hamburgerToggle} />
       <Drawer
         opened={isHamburgerOpened}
         onClose={hamburgerClose}

@@ -32,7 +32,9 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
 
   const sendbutton = (id: string) => {
     const ID = IdCreate(id);
-    AddItemList(titleValue, sentence, tagValue, ID);
+    if (!titleValue) setTitleValue("未タイトル");
+    const ItemList = { titleValue, sentence, tagValue, ID };
+    AddItemList(ItemList);
     setTitleValue("");
     setSentence("");
     setTagList([...new Set([...tagList, ...tagValue])]);
@@ -48,30 +50,6 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     setTagValue([]);
     setId("");
   };
-
-  //   extensions: [
-  //     StarterKit,
-  //     Underline,
-  //     Link,
-  //     Superscript,
-  //     SubScript,
-  //     Highlight,
-  //     TextAlign.configure({ types: ["heading", "paragraph"] }),
-  //   ],
-  //   listItem: sentence,
-  //   onUpdate: ({ editor }) => setSentence(editor.getHTML()),
-  // });
-
-  // if (editor) {
-  //   editor.on("update", () => {
-  //     setSentence(editor.getText());
-  //   });
-  // }
-
-  // if (!editor) {
-  //   return null;
-  // }
-  // setSentence(editor?.getText());
 
   useEffect(() => {
     setTitleValue(Items.title || "");
@@ -91,7 +69,6 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
         Tag={{ tagValue, setTagValue }}
         tagList={tagList}
         id={id}
-        titleValue={titleValue}
         sendbutton={sendbutton}
         deletebutton={deletebutton}
       ></TagArea>

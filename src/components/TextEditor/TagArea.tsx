@@ -12,7 +12,6 @@ type TagAreaType = {
   };
   tagList: string[];
   id: string;
-  titleValue: string;
   sendbutton: (id: string) => void;
   deletebutton: () => void;
 };
@@ -21,7 +20,7 @@ export const TagArea: NextPage<TagAreaType> = ({
   Tag,
   tagList,
   id,
-  titleValue,
+
   sendbutton,
   deletebutton,
 }) => {
@@ -45,6 +44,7 @@ export const TagArea: NextPage<TagAreaType> = ({
             radius="sm"
             color="red"
             className={classes.btn}
+            // onClick={() => send()}
             onClick={() => sendbutton(id)}
           >
             保存
