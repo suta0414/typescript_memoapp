@@ -4,29 +4,45 @@ import { MantineProvider } from "@mantine/core";
 import classes from "./page.module.css";
 import { NavbarPC, NavbarSP } from "../components/Navbar";
 import { TextEditor } from "../components/TextEditor";
-import { Suspense, useCallback, useState } from "react";
-import { MemoAppProps } from "@/types";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { Items, MemoAppProps } from "@/types";
 import { NextPage } from "next";
 import { useViewportSize } from "@mantine/hooks";
 import Loading from "./loading";
 
 const Home: NextPage = () => {
-  const data = [
-    { title: "abc", text: "bbb", tags: ["java"], id: "sdfhh" },
-    { title: "Notifications", text: "aaa", tags: ["react"], id: "sddd" },
-    { title: "tyu", text: "bbb", tags: ["java"], id: "sdfhhdh" },
-  ];
-
-  const [items, setItems] = useState(data);
+  const [items, setItems] = useState<Items[]>([]);
   const [content, setContent] = useState({});
   const { height, width } = useViewportSize();
+
+  let key = "ItemList";
+  // 初回レンダリング時にlocalStorageからデータを取得
+  useEffect(() => {
+    const getVal = window.localStorage.getItem(key);
+    if (getVal) {
+      try {
+        const parsedItems = JSON.parse(getVal);
+        if (Array.isArray(parsedItems)) {
+          setItems(parsedItems);
+        }
+      } catch (e) {
+        console.error("Failed to parse localStorage data", e);
+      }
+    }
+  }, []);
+
+  // itemsが更新されるたびにlocalStorageを更新
+  useEffect(() => {
+    if (items.length > 0) {
+      window.localStorage.setItem(key, JSON.stringify(items));
+    }
+  }, [items]);
 
   // エディタの内容をitemsに追加
   const AddItemList: MemoAppProps["AddItemList"] = (ItemList) => {
     const { titleValue, sentence, tagValue, ID } = ItemList;
     const index = items.findIndex((item) => item.id === ID);
     setContent("");
-
     if (index !== -1) {
       // IDが存在する場合、そのオブジェクトを上書
       items[index] = {

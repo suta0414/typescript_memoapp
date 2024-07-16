@@ -11,7 +11,7 @@ type DeleteSubmit = (idList: string) => void;
 
 type resetContent = () => void;
 
-type Items = {
+export type Items = {
   title?: string;
   text?: string;
   tags?: string[];
