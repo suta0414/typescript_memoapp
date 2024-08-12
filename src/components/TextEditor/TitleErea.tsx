@@ -33,7 +33,6 @@ export const TitleErea: NextPage<TitleEreaType> = ({ Title, resetbutton }) => {
         size="md"
         radius="sm"
         color="blue"
-        // onClick={() => reset()}
         onClick={() => resetbutton()}
       >
         新規作成

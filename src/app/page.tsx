@@ -74,9 +74,19 @@ const Home: NextPage = () => {
   // itemsから削除
   const deleteSubmit: MemoAppProps["deleteSubmit"] = (idList) => {
     setContent("");
-    setItems((prevItems) => {
-      return prevItems.filter((item) => item.id !== idList);
-    });
+    // console.log(typeof idList);
+    // console.log(idList);
+    if (Array.isArray(idList) && typeof idList === "object") {
+      setItems((prevItems) => {
+        return prevItems.filter((item) => !idList.includes(item.id));
+      });
+    } else if (typeof idList === "string") {
+      setItems((prevItems) => {
+        return prevItems.filter((item) => item.id !== idList);
+      });
+    } else {
+      console.log("型不一致");
+    }
   };
 
   // Navbarの内容をEditorに送る
@@ -87,9 +97,21 @@ const Home: NextPage = () => {
   // windowサイズで分ける
   const Navbar: NextPage = () => {
     if (width < 1024) {
-      return <NavbarSP ListItems={items} sendEditor={sendEditor} />;
+      return (
+        <NavbarSP
+          ListItems={items}
+          sendEditor={sendEditor}
+          deleteSubmit={deleteSubmit}
+        />
+      );
     } else {
-      return <NavbarPC ListItems={items} sendEditor={sendEditor} />;
+      return (
+        <NavbarPC
+          ListItems={items}
+          sendEditor={sendEditor}
+          deleteSubmit={deleteSubmit}
+        />
+      );
     }
   };
 
@@ -101,7 +123,7 @@ const Home: NextPage = () => {
         </Suspense>
         <TextEditor
           AddItemList={AddItemList}
-          Items={content}
+          sendItems={content}
           resetContent={resetContent}
           deleteSubmit={deleteSubmit}
         />

@@ -1,0 +1,1 @@
+export { DelBtn } from "./DelBtnProps";

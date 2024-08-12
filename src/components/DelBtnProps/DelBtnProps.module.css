@@ -1,0 +1,17 @@
+.sumdelbtn {
+  width: 100%;
+}
+.addbtn {
+  width: 110px;
+}
+.delbtn {
+  width: 110px;
+}
+@media screen and (max-width: 768px) {
+  .delbtn {
+    width: 30%;
+  }
+  .dissumdelbtn {
+    width: 100%;
+  }
+}

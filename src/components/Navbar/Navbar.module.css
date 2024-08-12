@@ -24,3 +24,18 @@
   top: 10px;
   left: 30px;
 }
+
+.navlink {
+  display: flex;
+  align-items: center;
+}
+
+.burgerdrawer {
+  width: 30%;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    margin-top: 1rem;
+  }
+}

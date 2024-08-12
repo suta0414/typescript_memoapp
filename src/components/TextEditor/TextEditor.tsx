@@ -11,7 +11,7 @@ import { IdCreate } from "@/src/hooks/IdCreate";
 
 export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
   AddItemList,
-  Items,
+  sendItems,
   resetContent,
   deleteSubmit,
 }) => {
@@ -50,13 +50,12 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     setTagValue([]);
     setId("");
   };
-
   useEffect(() => {
-    setTitleValue(Items.title || "");
-    setSentence(Items.text || "");
-    setTagValue(Items.tags || []);
-    setId(Items.id || "");
-  }, [Items]);
+    setTitleValue(sendItems.title || "");
+    setSentence(sendItems.text || "");
+    setTagValue(sendItems.tags || []);
+    setId(sendItems.id || "");
+  }, [sendItems]);
 
   return (
     <div className={classes.container}>

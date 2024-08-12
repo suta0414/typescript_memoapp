@@ -7,15 +7,29 @@ type AddItemList = (ItemList: {
 
 type SendEditor = (item: Items) => void;
 
-type DeleteSubmit = (idList: string) => void;
+type DeleteSubmit = (idList?: string | object) => void;
 
 type resetContent = () => void;
+
+type checkedState = { [key: string]: boolean };
+
+export type CheckedProps = {
+  checkedState: checkedState;
+  setCheckedState: React.Dispatch<React.SetStateAction<checkedState>>;
+};
+
+export type SendItems = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id?: string;
+};
 
 export type Items = {
   title?: string;
   text?: string;
   tags?: string[];
-  id?: string;
+  id: string;
 };
 
 export type MemoAppProps = {
@@ -23,7 +37,7 @@ export type MemoAppProps = {
   resetContent: resetContent;
   deleteSubmit: DeleteSubmit;
   sendEditor: SendEditor;
-  Items: Items;
+  sendItems: SendItems;
 };
 
 export type filteredListsType = (
@@ -34,9 +48,17 @@ export type filteredListsType = (
 export type NavbarType = {
   sendEditor: SendEditor;
   ListItems: Items[];
+  deleteSubmit: DeleteSubmit;
 };
 
 export type ItemlinksType = {
   sendEditor: SendEditor;
   filteredLists: Items[];
+  checked: CheckedProps;
+};
+
+export type DelBtnProps = {
+  state: string | string[];
+  deleteFnc: DeleteSubmit;
+  type: string;
 };

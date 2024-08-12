@@ -3,7 +3,7 @@ import { TagsInput } from "@mantine/core";
 import classes from "./TextEditor.module.css";
 import { Dispatch, SetStateAction } from "react";
 import { NextPage } from "next";
-import { DelBtn } from "./DelBtnModal";
+import { DelBtn } from "../DelBtnProps";
 
 type TagAreaType = {
   Tag: {
@@ -44,7 +44,6 @@ export const TagArea: NextPage<TagAreaType> = ({
             radius="sm"
             color="red"
             className={classes.btn}
-            // onClick={() => send()}
             onClick={() => sendbutton(id)}
           >
             保存
@@ -52,7 +51,7 @@ export const TagArea: NextPage<TagAreaType> = ({
         </Box>
       </Box>
       <Box className={classes.delbtncontainer}>
-        <DelBtn id={id} deletebutton={deletebutton}></DelBtn>
+        <DelBtn state={id} deleteFnc={deletebutton} type="one"></DelBtn>
       </Box>
     </div>
   );

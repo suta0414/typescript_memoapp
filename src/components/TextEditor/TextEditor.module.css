@@ -37,12 +37,6 @@
   margin: 2rem 50px;
   text-align: right;
 }
-.addbtn {
-  width: 110px;
-}
-.delbtn {
-  width: 110px;
-}
 
 @media screen and (max-width: 1024px) {
   .container {
