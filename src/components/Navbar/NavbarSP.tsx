@@ -1,15 +1,16 @@
 import classes from "./Navbar.module.css";
-import { Burger, Drawer } from "@mantine/core";
+import { Drawer } from "@mantine/core";
 import { useState } from "react";
 
 import { NavbarType } from "@/types";
 import { NextPage } from "next";
 import { useDisclosure } from "@mantine/hooks";
-import { SearchComponent } from "./SearchComponent";
+import { SearchComponent } from "../SearchBox/SearchComponent";
 import { Itemlinks } from "./Itemlinks";
-import { filteredLists } from "@/src/hooks/filteredLists";
+import { filteredItems } from "@/src/hooks/filteredItems";
 import { useInitCheckBoxId } from "@/src/hooks/useInitCheckBoxId";
-import { DelBtn } from "../DelBtnProps";
+import { BtnFnc } from "../BtnProps";
+import { trueItem } from "@/src/hooks/trueItem";
 
 export const NavbarSP: NextPage<NavbarType> = ({
   ListItems,
@@ -17,37 +18,38 @@ export const NavbarSP: NextPage<NavbarType> = ({
   deleteSubmit,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [
-    isHamburgerOpened,
-    { close: hamburgerClose, toggle: hamburgerToggle },
-  ] = useDisclosure(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const { checkedState, setCheckedState } = useInitCheckBoxId(ListItems);
+
   // チェックが入ったものだけを抽出
-  const trueItem = Object.entries(checkedState)
-    .filter(([key, value]) => value)
-    .map(([key, value]) => key);
+  const trueCheckItem = trueItem(checkedState);
+
   return (
     <div className={classes.sp_navbar_container}>
-      <Burger opened={isHamburgerOpened} onClick={hamburgerToggle} />
-      <Drawer
-        opened={isHamburgerOpened}
-        onClose={hamburgerClose}
-        withCloseButton={true}
-        size="xs"
-      >
+      <p onClick={open} className={classes.sp_navbar_title}>
+        タイトル一覧を表示
+      </p>
+      {/* <Burger opened={isHamburgerOpened} onClick={hamburgerToggle} /> */}
+      <Drawer opened={opened} onClose={close} withCloseButton={true} size="lg">
         <SearchComponent
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         ></SearchComponent>
+        <div className={classes.delbtncontainer}>
+          <BtnFnc
+            state={trueCheckItem}
+            fnc={() => deleteSubmit(trueCheckItem)}
+            type="sum"
+          ></BtnFnc>
+        </div>
         <nav className={classes.navbar}>
           <Itemlinks
             sendEditor={sendEditor}
-            filteredLists={filteredLists(ListItems, searchValue)}
+            filteredItems={filteredItems(ListItems, searchValue)}
             checked={{ checkedState, setCheckedState }}
           ></Itemlinks>
         </nav>
-        <DelBtn state={trueItem} deleteFnc={deleteSubmit} type="sum"></DelBtn>
       </Drawer>
     </div>
   );

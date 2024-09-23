@@ -6,6 +6,8 @@ import "@mantine/core/styles.css";
 
 import { MantineProvider } from "@mantine/core";
 import { Header } from "../components/Header";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 

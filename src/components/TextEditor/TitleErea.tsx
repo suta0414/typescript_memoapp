@@ -1,18 +1,18 @@
 import classes from "./TextEditor.module.css";
-import { Button, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 
-import React, { Dispatch, SetStateAction } from "react";
 import { NextPage } from "next";
+import { IconPencilPlus } from "@tabler/icons-react";
+import { BtnFnc } from "../BtnProps";
+import { TitleEreaType } from "@/types";
 
-type TitleEreaType = {
-  Title: {
-    titleValue: string;
-    setTitleValue: Dispatch<SetStateAction<string>>;
-  };
-  resetbutton: () => void;
-};
-
-export const TitleErea: NextPage<TitleEreaType> = ({ Title, resetbutton }) => {
+// タイトル部分
+export const TitleErea: NextPage<TitleEreaType> = ({
+  Title,
+  resetbutton,
+  deletebutton,
+  id,
+}) => {
   const { titleValue, setTitleValue } = Title;
 
   return (
@@ -21,22 +21,21 @@ export const TitleErea: NextPage<TitleEreaType> = ({ Title, resetbutton }) => {
         <TextInput
           size="md"
           radius="sm"
-          placeholder="タイトル"
+          placeholder="タイトル*"
           withAsterisk
           value={titleValue}
+          // maxLength={16}
           onChange={(event) => setTitleValue(event.currentTarget.value)}
         />
       </h2>
 
-      <Button
-        variant="filled"
-        size="md"
-        radius="sm"
-        color="blue"
-        onClick={() => resetbutton()}
-      >
-        新規作成
-      </Button>
+      <div className={classes.funcbar}>
+        <div onClick={() => resetbutton()} className={classes.newbtn}>
+          <IconPencilPlus size={20} className={classes.newicon} />
+          <p>新規作成</p>
+        </div>
+        <BtnFnc state={id} fnc={deletebutton} type="one"></BtnFnc>
+      </div>
     </div>
   );
 };

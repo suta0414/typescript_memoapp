@@ -62,6 +62,8 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
       <TitleErea
         Title={{ titleValue, setTitleValue }}
         resetbutton={resetbutton}
+        deletebutton={deletebutton}
+        id={id}
       ></TitleErea>
       <TextArea Sentence={{ sentence, setSentence }}></TextArea>
       <TagArea
@@ -69,7 +71,7 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
         tagList={tagList}
         id={id}
         sendbutton={sendbutton}
-        deletebutton={deletebutton}
+        title={titleValue}
       ></TagArea>
     </div>
   );

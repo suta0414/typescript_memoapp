@@ -4,11 +4,12 @@ import { useState } from "react";
 
 import { NavbarType } from "@/types";
 import { NextPage } from "next";
-import { SearchComponent } from "./SearchComponent";
+import { SearchComponent } from "../SearchBox/SearchComponent";
 import { Itemlinks } from "./Itemlinks";
-import { filteredLists } from "@/src/hooks/filteredLists";
+import { filteredItems } from "@/src/hooks/filteredItems";
 import { useInitCheckBoxId } from "@/src/hooks/useInitCheckBoxId";
-import { DelBtn } from "../DelBtnProps";
+import { trueItem } from "@/src/hooks/trueItem";
+import { BtnFnc } from "../BtnProps";
 
 export const NavbarPC: NextPage<NavbarType> = ({
   ListItems,
@@ -18,9 +19,9 @@ export const NavbarPC: NextPage<NavbarType> = ({
   const [searchValue, setSearchValue] = useState("");
 
   const { checkedState, setCheckedState } = useInitCheckBoxId(ListItems);
-  const trueItem = Object.entries(checkedState)
-    .filter(([key, value]) => value)
-    .map(([key, value]) => key);
+
+  // チェックが入ったものだけを抽出
+  const trueCheckItem = trueItem(checkedState);
 
   return (
     <Flex direction="column" gap="md" className={classes.navbar_container}>
@@ -28,14 +29,19 @@ export const NavbarPC: NextPage<NavbarType> = ({
         searchValue={searchValue}
         setSearchValue={setSearchValue}
       ></SearchComponent>
+      <BtnFnc
+        state={trueCheckItem}
+        fnc={() => deleteSubmit(trueCheckItem)}
+        type="sum"
+      ></BtnFnc>
+
       <nav className={classes.navbar}>
         <Itemlinks
           sendEditor={sendEditor}
-          filteredLists={filteredLists(ListItems, searchValue)}
+          filteredItems={filteredItems(ListItems, searchValue)}
           checked={{ checkedState, setCheckedState }}
         ></Itemlinks>
       </nav>
-      <DelBtn state={trueItem} deleteFnc={deleteSubmit} type="sum"></DelBtn>
     </Flex>
   );
 };

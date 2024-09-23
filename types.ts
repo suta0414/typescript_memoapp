@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 type AddItemList = (ItemList: {
   titleValue: string;
   sentence: string;
@@ -11,7 +13,7 @@ type DeleteSubmit = (idList?: string | object) => void;
 
 type resetContent = () => void;
 
-type checkedState = { [key: string]: boolean };
+export type checkedState = { [key: string]: boolean };
 
 export type CheckedProps = {
   checkedState: checkedState;
@@ -40,10 +42,15 @@ export type MemoAppProps = {
   sendItems: SendItems;
 };
 
-export type filteredListsType = (
+export type filteredItemsType = (
   ListItems: Items[],
   searchValue: string
 ) => Items[];
+
+export type ItemPropsType = {
+  items: Items[];
+  searchValue: string;
+};
 
 export type NavbarType = {
   sendEditor: SendEditor;
@@ -53,12 +60,22 @@ export type NavbarType = {
 
 export type ItemlinksType = {
   sendEditor: SendEditor;
-  filteredLists: Items[];
+  filteredItems: Items[];
   checked: CheckedProps;
 };
 
-export type DelBtnProps = {
+export type BtnProps = {
   state: string | string[];
-  deleteFnc: DeleteSubmit;
+  fnc: DeleteSubmit;
   type: string;
+};
+
+export type TitleEreaType = {
+  Title: {
+    titleValue: string;
+    setTitleValue: Dispatch<SetStateAction<string>>;
+  };
+  resetbutton: () => void;
+  deletebutton: DeleteSubmit;
+  id: string;
 };

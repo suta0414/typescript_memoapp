@@ -1,9 +1,8 @@
-import { Box, Button } from "@mantine/core";
 import { TagsInput } from "@mantine/core";
 import classes from "./TextEditor.module.css";
 import { Dispatch, SetStateAction } from "react";
 import { NextPage } from "next";
-import { DelBtn } from "../DelBtnProps";
+import { BtnFnc } from "../BtnProps";
 
 type TagAreaType = {
   Tag: {
@@ -13,46 +12,32 @@ type TagAreaType = {
   tagList: string[];
   id: string;
   sendbutton: (id: string) => void;
-  deletebutton: () => void;
+  title: string;
 };
 
+// タグ部分
 export const TagArea: NextPage<TagAreaType> = ({
   Tag,
   tagList,
   id,
-
   sendbutton,
-  deletebutton,
+  title,
 }) => {
   const { tagValue, setTagValue } = Tag;
 
   return (
-    <div>
-      <Box className={classes.u_editor}>
-        <TagsInput
-          data={tagList}
-          placeholder="タグ"
-          className={classes.tag}
-          value={tagValue}
-          onChange={setTagValue}
-        />
+    <div className={classes.u_editor}>
+      <TagsInput
+        data={tagList}
+        placeholder="タグ"
+        className={classes.tag}
+        value={tagValue}
+        onChange={setTagValue}
+      />
 
-        <Box className={classes.u_btn}>
-          <Button
-            variant="filled"
-            size="lg"
-            radius="sm"
-            color="red"
-            className={classes.btn}
-            onClick={() => sendbutton(id)}
-          >
-            保存
-          </Button>
-        </Box>
-      </Box>
-      <Box className={classes.delbtncontainer}>
-        <DelBtn state={id} deleteFnc={deletebutton} type="one"></DelBtn>
-      </Box>
+      <div className={classes.u_btn}>
+        <BtnFnc state={title} fnc={() => sendbutton(id)} type="save"></BtnFnc>
+      </div>
     </div>
   );
 };

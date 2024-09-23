@@ -8,13 +8,9 @@ import { ItemlinksType } from "@/types";
 
 export const Itemlinks: NextPage<ItemlinksType> = ({
   sendEditor,
-  filteredLists,
+  filteredItems,
   checked,
 }) => {
-  // if (!Array.isArray(filteredLists)) {
-  //   return null;
-  // }
-
   const { checkedState, setCheckedState } = checked;
 
   const handleCheckboxChange = (id: string) => {
@@ -24,18 +20,19 @@ export const Itemlinks: NextPage<ItemlinksType> = ({
     }));
   };
 
-  const links = filteredLists.map((filterList) => {
+  const links = filteredItems.map((filterItem) => {
     return (
-      <div key={filterList.id} className={classes.navlink}>
+      <div key={filterItem.id} className={classes.navlink}>
         <Checkbox
           size="xs"
-          checked={checkedState[filterList.id] || false}
-          onChange={() => handleCheckboxChange(filterList.id)}
+          checked={checkedState[filterItem.id] || false}
+          onChange={() => handleCheckboxChange(filterItem.id)}
         />
         <NavLink
-          label={filterList.title}
+          label={filterItem.title}
           leftSection={<IconTag className={classes.linkIcon} stroke={2} />}
-          onClick={() => sendEditor(filterList)}
+          noWrap={true}
+          onClick={() => sendEditor(filterItem)}
         />
       </div>
     );

@@ -10,6 +10,7 @@ type TextAreaType = {
   };
 };
 
+// テキスト部分
 export const TextArea: NextPage<TextAreaType> = ({ Sentence }) => {
   const { sentence, setSentence } = Sentence;
   return (

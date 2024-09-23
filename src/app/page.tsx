@@ -9,24 +9,26 @@ import { Items, MemoAppProps } from "@/types";
 import { NextPage } from "next";
 import { useViewportSize } from "@mantine/hooks";
 import Loading from "./loading";
+import { useSearchParams } from "next/navigation";
+import { firstLocalStorage } from "../hooks/firstLocalStorage";
 
 const Home: NextPage = () => {
+  const searchParams = useSearchParams();
+
   const [items, setItems] = useState<Items[]>([]);
   const [content, setContent] = useState({});
   const { height, width } = useViewportSize();
+  const id = searchParams.get("id");
 
-  let key = "ItemList";
   // 初回レンダリング時にlocalStorageからデータを取得
   useEffect(() => {
-    const getVal = window.localStorage.getItem(key);
-    if (getVal) {
-      try {
-        const parsedItems = JSON.parse(getVal);
-        if (Array.isArray(parsedItems)) {
-          setItems(parsedItems);
-        }
-      } catch (e) {
-        console.error("Failed to parse localStorage data", e);
+    const parsedItems = firstLocalStorage();
+    setItems(parsedItems);
+    // 個別ページから来た時
+    if (parsedItems && id) {
+      const foundItem = parsedItems.find((item) => item.id === id);
+      if (foundItem) {
+        setContent(foundItem);
       }
     }
   }, []);
@@ -34,7 +36,10 @@ const Home: NextPage = () => {
   // itemsが更新されるたびにlocalStorageを更新
   useEffect(() => {
     if (items.length > 0) {
+      const key = "ItemList";
       window.localStorage.setItem(key, JSON.stringify(items));
+      // console.log(items);
+      // console.log(JSON.stringify(localStorage).length);
     }
   }, [items]);
 
@@ -45,12 +50,19 @@ const Home: NextPage = () => {
     setContent("");
     if (index !== -1) {
       // IDが存在する場合、そのオブジェクトを上書
-      items[index] = {
-        title: titleValue,
-        text: sentence,
-        tags: tagValue,
-        id: ID,
-      };
+      setItems((prevItems) =>
+        prevItems.map((item, i) =>
+          i === index
+            ? {
+                ...item,
+                title: titleValue,
+                text: sentence,
+                tags: tagValue,
+                id: ID,
+              }
+            : item
+        )
+      );
     } else {
       setItems((prevItems) => {
         return [

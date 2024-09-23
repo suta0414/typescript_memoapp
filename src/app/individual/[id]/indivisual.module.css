@@ -1,0 +1,105 @@
+.container {
+  width: 70%;
+  margin: 0 auto;
+}
+.titleerea {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #0099ff;
+  color: white;
+  place-items: center;
+}
+.left_titleerea {
+  flex-grow: 4;
+  max-width: 90%;
+}
+.title {
+  font-size: 2rem;
+}
+.edit {
+  flex-grow: 1;
+  max-width: 10%;
+  margin-top: auto;
+  text-align: end;
+}
+.tag {
+  max-width: 100%;
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.edit_icon {
+  margin-bottom: -3px;
+  width: 20px;
+  height: 20px;
+}
+.text {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+  word-break: break-all;
+  min-height: 60px;
+  padding: 20px;
+  font-size: 1.2rem;
+  align-content: center;
+}
+.delete {
+  margin: 6px 10px 60px 0;
+  display: flex;
+  justify-content: end;
+}
+.deletebtn {
+  display: flex;
+  gap: 2px;
+  cursor: pointer;
+}
+.deleteicon {
+  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+}
+
+.arrowicon {
+  margin-bottom: -6px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 96%;
+    font-size: 0.8rem;
+  }
+  .titleerea {
+    padding: 8px;
+  }
+  .left_titleerea {
+    max-width: 86%;
+  }
+  .edit {
+    max-width: 14%;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+  .text {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+  .delete {
+    margin-bottom: 40px;
+  }
+  .edit_icon {
+    margin-bottom: -3px;
+    width: 18px;
+    height: 18px;
+  }
+  .deleteicon {
+    margin-top: 0;
+    width: 18px;
+    height: 18px;
+  }
+  .arrowicon {
+    width: 0.8rem;
+    margin-bottom: -8px;
+  }
+}

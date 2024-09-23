@@ -1,0 +1,1 @@
+export { BtnFnc } from "./BtnProps";

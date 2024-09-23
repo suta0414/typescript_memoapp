@@ -1,7 +1,8 @@
 import escapeStringRegexp from "escape-string-regexp";
-import { filteredListsType } from "@/types";
+import { filteredItemsType } from "@/types";
 
-export const filteredLists: filteredListsType = (ListItems, searchValue) => {
+export const filteredItems: filteredItemsType = (ListItems, searchValue) => {
+  // console.log(ListItems);
   const Lists = ListItems.filter((ListItem) => {
     if (!ListItem.title) return true;
     // ユーザー入力を安全に正規表現にする（このときすべて小文字化で正規化する）

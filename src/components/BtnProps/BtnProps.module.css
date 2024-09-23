@@ -1,0 +1,35 @@
+.sumdelbtn {
+  width: 100%;
+}
+.dissumdelbtn {
+  width: 100%;
+}
+.addbtn {
+  width: 110px;
+}
+.disableddelete {
+  color: gray;
+  text-decoration: line-through;
+  display: flex;
+  gap: 2px;
+  cursor: not-allowed;
+}
+.delbtn {
+  display: flex;
+  cursor: pointer;
+  gap: 2px;
+}
+.trashicon {
+  margin-top: 2px;
+}
+.savebtn {
+  width: 100%;
+}
+@media screen and (max-width: 768px) {
+  /* .delbtn {
+    width: 30%;
+  } */
+  .dissumdelbtn {
+    width: 100%;
+  }
+}
