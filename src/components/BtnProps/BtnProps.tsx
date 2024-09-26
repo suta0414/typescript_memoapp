@@ -2,8 +2,14 @@ import { Button, Flex, Modal } from "@mantine/core";
 import classes from "./BtnProps.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { NextPage } from "next";
-import { BtnProps } from "@/types";
+import { DeleteSubmit } from "@/types";
 import { IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
+
+type BtnProps = {
+  state: string | string[];
+  fnc: DeleteSubmit;
+  type: string;
+};
 
 export const BtnFnc: NextPage<BtnProps> = ({ state, fnc, type }) => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -14,7 +20,7 @@ export const BtnFnc: NextPage<BtnProps> = ({ state, fnc, type }) => {
       return (
         <div>
           <Button
-            leftSection={<IconTrash size={20} />}
+            leftSection={<IconTrash size={18} />}
             disabled
             variant="filled"
             size="md"
@@ -132,7 +138,9 @@ export const BtnFnc: NextPage<BtnProps> = ({ state, fnc, type }) => {
       return (
         <div>
           <Button
-            leftSection={<IconDeviceFloppy size={20} />}
+            leftSection={
+              <IconDeviceFloppy style={{ marginTop: "2px" }} size={20} />
+            }
             disabled
             variant="filled"
             size="lg"
@@ -148,7 +156,9 @@ export const BtnFnc: NextPage<BtnProps> = ({ state, fnc, type }) => {
       return (
         <div>
           <Button
-            leftSection={<IconDeviceFloppy size={20} />}
+            leftSection={
+              <IconDeviceFloppy style={{ marginTop: "2px" }} size={20} />
+            }
             variant="filled"
             size="lg"
             radius="sm"

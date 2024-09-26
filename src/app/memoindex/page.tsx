@@ -20,7 +20,6 @@ const PageIndex: NextPage = () => {
   // 初回レンダリング時にlocalStorageからデータを取得
   useEffect(() => {
     const parsedItems = firstLocalStorage();
-    // console.log(parsedItems);
     setItems(parsedItems);
   }, []);
 
@@ -29,7 +28,7 @@ const PageIndex: NextPage = () => {
       <div className={classes.funcbar}>
         <div className={classes.innner_funcbar}>
           <Link href="/" className={classes.newlink}>
-            <IconPencilPlus size={16} />
+            <IconPencilPlus size={16} className={classes.newicon} />
             新規作成
           </Link>
           <SearchComponent
@@ -40,7 +39,7 @@ const PageIndex: NextPage = () => {
       </div>
       <h2 className={classes.title}>メモ一覧</h2>
       <Suspense fallback={<Loading />}>
-        {items ? (
+        {items.length > 0 ? (
           <div className={classes.card_wrapper}>
             <ItemIndex items={items} searchValue={searchValue}></ItemIndex>
           </div>

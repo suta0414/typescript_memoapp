@@ -14,14 +14,17 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
   sendItems,
   resetContent,
   deleteSubmit,
+  itemTagList,
 }) => {
   const [titleValue, setTitleValue] = useState("");
   const [tagValue, setTagValue] = useState([""]);
   const [sentence, setSentence] = useState("");
 
-  const [tagList, setTagList] = useState(["react", "java"]);
   const [id, setId] = useState("");
 
+  const { tagList, setTagList } = itemTagList;
+
+  // 新規作成をクリックしたとき
   const resetbutton = () => {
     setTitleValue("");
     setSentence("");
@@ -30,6 +33,7 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     resetContent();
   };
 
+  // 保存したとき
   const sendbutton = (id: string) => {
     const ID = IdCreate(id);
     if (!titleValue) setTitleValue("未タイトル");
@@ -42,6 +46,7 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     setId("");
   };
 
+  // 削除をクリックしたとき
   const deletebutton = () => {
     deleteSubmit(id);
 
@@ -50,6 +55,8 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     setTagValue([]);
     setId("");
   };
+
+  // Navbarをクリックしたとき
   useEffect(() => {
     setTitleValue(sendItems.title || "");
     setSentence(sendItems.text || "");

@@ -18,12 +18,28 @@ const Home: NextPage = () => {
   const [items, setItems] = useState<Items[]>([]);
   const [content, setContent] = useState({});
   const { height, width } = useViewportSize();
+  const [tagList, setTagList] = useState<string[]>([]);
+
   const id = searchParams.get("id");
 
   // 初回レンダリング時にlocalStorageからデータを取得
   useEffect(() => {
     const parsedItems = firstLocalStorage();
     setItems(parsedItems);
+
+    // タグのリストを作成
+    const allTags = parsedItems.reduce((acc: string[], item) => {
+      if (item.tags && item.tags.length > 0) {
+        acc.push(...item.tags);
+      }
+      return acc;
+    }, []);
+    // 重複を排除してtagListに追加
+    setTagList((prevTagList) => {
+      const newTagList = [...prevTagList, ...allTags];
+      return [...new Set(newTagList)]; // Setを使って重複を排除
+    });
+
     // 個別ページから来た時
     if (parsedItems && id) {
       const foundItem = parsedItems.find((item) => item.id === id);
@@ -38,8 +54,6 @@ const Home: NextPage = () => {
     if (items.length > 0) {
       const key = "ItemList";
       window.localStorage.setItem(key, JSON.stringify(items));
-      // console.log(items);
-      // console.log(JSON.stringify(localStorage).length);
     }
   }, [items]);
 
@@ -64,6 +78,7 @@ const Home: NextPage = () => {
         )
       );
     } else {
+      // IDが存在しない場合、新しいオブジェクトを追加
       setItems((prevItems) => {
         return [
           ...prevItems,
@@ -86,13 +101,13 @@ const Home: NextPage = () => {
   // itemsから削除
   const deleteSubmit: MemoAppProps["deleteSubmit"] = (idList) => {
     setContent("");
-    // console.log(typeof idList);
-    // console.log(idList);
+    //まとめて削除の時
     if (Array.isArray(idList) && typeof idList === "object") {
       setItems((prevItems) => {
         return prevItems.filter((item) => !idList.includes(item.id));
       });
     } else if (typeof idList === "string") {
+      // 個別削除
       setItems((prevItems) => {
         return prevItems.filter((item) => item.id !== idList);
       });
@@ -138,6 +153,7 @@ const Home: NextPage = () => {
           sendItems={content}
           resetContent={resetContent}
           deleteSubmit={deleteSubmit}
+          itemTagList={{ tagList, setTagList }}
         />
       </div>
     </MantineProvider>

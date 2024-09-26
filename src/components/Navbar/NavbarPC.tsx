@@ -2,7 +2,7 @@ import classes from "./Navbar.module.css";
 import { Flex } from "@mantine/core";
 import { useState } from "react";
 
-import { NavbarType } from "@/types";
+import { DeleteSubmit, Items, SendEditor } from "@/types";
 import { NextPage } from "next";
 import { SearchComponent } from "../SearchBox/SearchComponent";
 import { Itemlinks } from "./Itemlinks";
@@ -10,6 +10,12 @@ import { filteredItems } from "@/src/hooks/filteredItems";
 import { useInitCheckBoxId } from "@/src/hooks/useInitCheckBoxId";
 import { trueItem } from "@/src/hooks/trueItem";
 import { BtnFnc } from "../BtnProps";
+
+type NavbarType = {
+  sendEditor: SendEditor;
+  ListItems: Items[];
+  deleteSubmit: DeleteSubmit;
+};
 
 export const NavbarPC: NextPage<NavbarType> = ({
   ListItems,

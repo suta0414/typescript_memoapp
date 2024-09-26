@@ -6,10 +6,12 @@ export const IdCreate = (idList: string) => {
   };
 
   const idcheck = (idList: string) => {
+    // IDがないとき作成
     if (!idList) {
       const ID = generateRandomID();
       return ID;
     } else {
+      // IDが存在するときはそのIDを返す
       const ID = idList;
       return ID;
     }

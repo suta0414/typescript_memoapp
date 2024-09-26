@@ -4,7 +4,18 @@ import { TextInput } from "@mantine/core";
 import { NextPage } from "next";
 import { IconPencilPlus } from "@tabler/icons-react";
 import { BtnFnc } from "../BtnProps";
-import { TitleEreaType } from "@/types";
+import { DeleteSubmit } from "@/types";
+import { Dispatch, SetStateAction } from "react";
+
+type TitleEreaType = {
+  Title: {
+    titleValue: string;
+    setTitleValue: Dispatch<SetStateAction<string>>;
+  };
+  resetbutton: () => void;
+  deletebutton: DeleteSubmit;
+  id: string;
+};
 
 // タイトル部分
 export const TitleErea: NextPage<TitleEreaType> = ({

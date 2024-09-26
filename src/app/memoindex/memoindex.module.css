@@ -64,7 +64,7 @@
   font-size: 30px;
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (max-width: 1024px) {
   .funcbar {
     width: 100%;
   }
@@ -87,6 +87,12 @@
   }
   .newlink {
     margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+  .newicon {
+    width: 16px;
+    height: 16px;
+    margin-bottom: -2px;
   }
   .card_wrapper {
     grid-template-columns: 1fr;

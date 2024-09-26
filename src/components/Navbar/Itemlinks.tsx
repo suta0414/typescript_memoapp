@@ -4,7 +4,13 @@ import classes from "./Navbar.module.css";
 import { Checkbox, NavLink } from "@mantine/core";
 
 import { NextPage } from "next";
-import { ItemlinksType } from "@/types";
+import { CheckedProps, Items, SendEditor } from "@/types";
+
+type ItemlinksType = {
+  sendEditor: SendEditor;
+  filteredItems: Items[];
+  checked: CheckedProps;
+};
 
 export const Itemlinks: NextPage<ItemlinksType> = ({
   sendEditor,
@@ -13,6 +19,7 @@ export const Itemlinks: NextPage<ItemlinksType> = ({
 }) => {
   const { checkedState, setCheckedState } = checked;
 
+  // チェックボックスの処理
   const handleCheckboxChange = (id: string) => {
     setCheckedState((prevState) => ({
       ...prevState,

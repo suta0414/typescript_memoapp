@@ -7,8 +7,13 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { filteredItems } from "@/src/hooks/filteredItems";
 import { Suspense, useEffect, useState } from "react";
-import { ItemPropsType, Items } from "@/types";
+import { Items } from "@/types";
 import Loading from "../loading";
+
+type ItemPropsType = {
+  items: Items[];
+  searchValue: string;
+};
 
 export const ItemIndex: NextPage<ItemPropsType> = ({ items, searchValue }) => {
   const [showItems, setShowItems] = useState<Items[]>([]);

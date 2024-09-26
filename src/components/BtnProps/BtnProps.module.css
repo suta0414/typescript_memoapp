@@ -20,15 +20,13 @@
   gap: 2px;
 }
 .trashicon {
-  margin-top: 2px;
+  margin-top: 4px;
 }
 .savebtn {
   width: 100%;
 }
+
 @media screen and (max-width: 768px) {
-  /* .delbtn {
-    width: 30%;
-  } */
   .dissumdelbtn {
     width: 100%;
   }

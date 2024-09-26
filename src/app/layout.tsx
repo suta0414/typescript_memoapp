@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import "@mantine/core/styles.css";
-// import "@mantine/tiptap/styles.css";
 
 import { MantineProvider } from "@mantine/core";
 import { Header } from "../components/Header";
-import { Suspense } from "react";
-import Loading from "./loading";
 
-const inter = Inter({ subsets: ["latin"] });
+const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata: Metadata = {
   title: "MemoApp",
@@ -23,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body>
+      <body className={notoSansJP.className}>
         <MantineProvider>
           <Header />
           {children}
