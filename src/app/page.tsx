@@ -51,7 +51,7 @@ const Home: NextPage = () => {
 
   // itemsが更新されるたびにlocalStorageを更新
   useEffect(() => {
-    if (items.length > 0) {
+    if (items.length >= 0) {
       const key = "ItemList";
       window.localStorage.setItem(key, JSON.stringify(items));
     }
