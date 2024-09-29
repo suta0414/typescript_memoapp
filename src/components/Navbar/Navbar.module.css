@@ -20,7 +20,7 @@
 
 .sp_navbar_container {
   position: absolute;
-  bottom: 30px;
+  bottom: -40px;
   left: 16px;
 }
 .sp_navbar_title {

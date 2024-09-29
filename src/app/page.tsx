@@ -123,7 +123,7 @@ const Home: NextPage = () => {
 
   // windowサイズで分ける
   const Navbar: NextPage = () => {
-    if (width < 1024) {
+    if (width <= 1024) {
       return (
         <NavbarSP
           ListItems={items}
