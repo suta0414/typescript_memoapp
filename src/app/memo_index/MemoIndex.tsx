@@ -1,31 +1,35 @@
-import classes from "./memoindex.module.css";
+import classes from "./MemoIndex.module.css";
 
-import { Title } from "@mantine/core";
-import { Card, Text } from "@mantine/core";
+import { Title, Card, Text } from "@mantine/core";
 
-import { NextPage } from "next";
 import Link from "next/link";
-import { filteredItems } from "@/src/hooks/filteredItems";
+import { filteredItems } from "@/src/hooks/FilteredItems";
 import { Suspense, useEffect, useState } from "react";
-import { Items } from "@/types";
+
 import Loading from "../loading";
+type Items = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id: string;
+};
 
 type ItemPropsType = {
   items: Items[];
   searchValue: string;
 };
 
-export const ItemIndex: NextPage<ItemPropsType> = ({ items, searchValue }) => {
+export const MemoIndex: React.FC<ItemPropsType> = ({ items, searchValue }) => {
   const [showItems, setShowItems] = useState<Items[]>([]);
 
   useEffect(() => {
     setShowItems(filteredItems(items, searchValue));
   }, [items, searchValue]);
 
-  const links = showItems.map((item) => {
-    return (
-      <div key={item.id} className={classes.card}>
-        <Suspense fallback={<Loading />}>
+  const memo_Index = () => {
+    return showItems.map((item) => {
+      return (
+        <div key={item.id} className={classes.card}>
           <Link href={`/individual/${item.id}`}>
             <Card
               shadow="sm"
@@ -34,12 +38,7 @@ export const ItemIndex: NextPage<ItemPropsType> = ({ items, searchValue }) => {
               withBorder
               className={classes.carditem}
             >
-              <Card.Section
-                withBorder
-                inheritPadding
-                py="xs"
-                // className={classes.cardtitle}
-              >
+              <Card.Section withBorder inheritPadding py="xs">
                 <Title order={3} lineClamp={1} className={classes.cardtitle}>
                   {item.title}
                 </Title>
@@ -63,9 +62,14 @@ export const ItemIndex: NextPage<ItemPropsType> = ({ items, searchValue }) => {
               </Card.Section>
             </Card>
           </Link>
-        </Suspense>
-      </div>
-    );
-  });
-  return links;
+        </div>
+      );
+    });
+  };
+
+  return (
+    <div>
+      <Suspense fallback={<Loading />}>{memo_Index()}</Suspense>
+    </div>
+  );
 };

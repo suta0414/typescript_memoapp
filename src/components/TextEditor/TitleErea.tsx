@@ -1,10 +1,8 @@
 import classes from "./TextEditor.module.css";
 import { TextInput } from "@mantine/core";
 
-import { NextPage } from "next";
 import { IconPencilPlus } from "@tabler/icons-react";
-import { BtnFnc } from "../BtnProps";
-import { DeleteSubmit } from "@/types";
+import { BtnFnc } from "../BtnFnc";
 import { Dispatch, SetStateAction } from "react";
 
 type TitleEreaType = {
@@ -13,12 +11,12 @@ type TitleEreaType = {
     setTitleValue: Dispatch<SetStateAction<string>>;
   };
   resetbutton: () => void;
-  deletebutton: DeleteSubmit;
+  deletebutton: (idList?: string | object) => void;
   id: string;
 };
 
 // タイトル部分
-export const TitleErea: NextPage<TitleEreaType> = ({
+export const TitleErea: React.FC<TitleEreaType> = ({
   Title,
   resetbutton,
   deletebutton,

@@ -1,4 +1,9 @@
-import { Items } from "@/types";
+type Items = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id: string;
+};
 
 const key = "ItemList";
 

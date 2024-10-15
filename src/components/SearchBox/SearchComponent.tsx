@@ -4,8 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 
 import classes from "./Search.module.css";
 import { TextInput, rem } from "@mantine/core";
-import { inputSearchValue } from "@/src/hooks/inputSearchValue";
-import { NextPage } from "next";
+import { inputSearchValue } from "@/src/hooks/InputSearchValue";
 
 type SearchComponent = {
   searchValue: string;
@@ -13,7 +12,7 @@ type SearchComponent = {
 };
 
 // 検索ボックス
-export const SearchComponent: NextPage<SearchComponent> = ({
+export const SearchComponent: React.FC<SearchComponent> = ({
   searchValue,
   setSearchValue,
 }) => {

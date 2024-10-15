@@ -1,7 +1,12 @@
 import escapeStringRegexp from "escape-string-regexp";
-import { Items } from "@/types";
 
-type filteredItemsType = (ListItems: Items[], searchValue: string) => Items[];
+type Items = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id: string;
+};
+type FilteredItemsType = (ListItems: Items[], searchValue: string) => Items[];
 
 // 全角を半角に変換
 const full_half = (str: string) => {
@@ -12,7 +17,7 @@ const full_half = (str: string) => {
     .replace(/　/g, " "); // 全角スペースを半角スペースに変換
 };
 
-export const filteredItems: filteredItemsType = (ListItems, searchValue) => {
+export const filteredItems: FilteredItemsType = (ListItems, searchValue) => {
   // 全角を半角に変換
   searchValue = full_half(searchValue);
   // console.log(ListItems);

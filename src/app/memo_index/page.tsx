@@ -1,18 +1,22 @@
 "use client";
 
-import classes from "./memoindex.module.css";
+import classes from "./MemoIndex.module.css";
 
-import { Suspense, useEffect, useState } from "react";
-import { NextPage } from "next";
-import { ItemIndex } from "./ItemIndex";
-import { Items } from "@/types";
+import { useEffect, useState } from "react";
+import { MemoIndex } from "./MemoIndex";
 import Link from "next/link";
 import { IconPencilPlus } from "@tabler/icons-react";
 import { SearchComponent } from "@/src/components/SearchBox";
-import { firstLocalStorage } from "@/src/hooks/firstLocalStorage";
-import Loading from "../loading";
+import { firstLocalStorage } from "@/src/hooks/FirstLocalStorage";
 
-const PageIndex: NextPage = () => {
+type Items = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id: string;
+};
+
+const PageIndex: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const [items, setItems] = useState<Items[]>([]);
@@ -38,16 +42,16 @@ const PageIndex: NextPage = () => {
         </div>
       </div>
       <h2 className={classes.title}>メモ一覧</h2>
-      <Suspense fallback={<Loading />}>
-        {items.length > 0 ? (
-          <div className={classes.card_wrapper}>
-            <ItemIndex items={items} searchValue={searchValue}></ItemIndex>
-          </div>
-        ) : (
-          <p className={classes.nomemo}>メモがありません</p>
-        )}
-      </Suspense>
+
+      {items.length > 0 ? (
+        <div className={classes.card_wrapper}>
+          <MemoIndex items={items} searchValue={searchValue}></MemoIndex>
+        </div>
+      ) : (
+        <p className={classes.nomemo}>メモがありません</p>
+      )}
     </div>
   );
 };
+
 export default PageIndex;

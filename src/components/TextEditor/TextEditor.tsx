@@ -1,16 +1,39 @@
 import classes from "./TextEditor.module.css";
 
 import { useEffect, useState } from "react";
-import { MemoAppProps } from "@/types";
 import React from "react";
-import { NextPage } from "next";
 import { TitleErea } from "./TitleErea";
 import { TextArea } from "./TextArea";
 import { TagArea } from "./TagArea";
 import { IdCreate } from "@/src/hooks/IdCreate";
 
-export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
-  AddItemList,
+type SendItems = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id?: string;
+};
+
+type AddItemList = (ItemList: {
+  titleValue: string;
+  sentence: string;
+  tagValue: string[];
+  ID: string;
+}) => void;
+
+type TextEditorProps = {
+  addItemList: AddItemList;
+  resetContent: () => void;
+  deleteSubmit: (idList?: string | object) => void;
+  sendItems: SendItems;
+  itemTagList: {
+    tagList: string[];
+    setTagList: React.Dispatch<React.SetStateAction<string[]>>;
+  };
+};
+
+export const TextEditor: React.FC<TextEditorProps> = ({
+  addItemList,
   sendItems,
   resetContent,
   deleteSubmit,
@@ -38,7 +61,7 @@ export const TextEditor: NextPage<Omit<MemoAppProps, "sendEditor">> = ({
     const ID = IdCreate(id);
     if (!titleValue) setTitleValue("未タイトル");
     const ItemList = { titleValue, sentence, tagValue, ID };
-    AddItemList(ItemList);
+    addItemList(ItemList);
     setTitleValue("");
     setSentence("");
     setTagList([...new Set([...tagList, ...tagValue])]);

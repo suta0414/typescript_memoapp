@@ -13,7 +13,7 @@ export const Header: NextPage = () => {
   let HeaderMenu;
   if (pathname === "/") {
     HeaderMenu = HomeHeaderMenu;
-  } else if (pathname.startsWith("/memoindex")) {
+  } else if (pathname.startsWith("/memo_index")) {
     HeaderMenu = IndexHeaderMenu;
   } else {
     HeaderMenu = IndHeaderMenu;

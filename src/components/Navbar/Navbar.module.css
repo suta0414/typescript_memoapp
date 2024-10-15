@@ -5,10 +5,14 @@
 }
 
 .navbar {
-  min-height: rem(200px);
   display: flex;
   flex-direction: column;
   min-width: 15vw;
+}
+
+.navlink {
+  display: flex;
+  align-items: center;
 }
 
 .linkIcon {
@@ -18,28 +22,82 @@
   margin-top: 2px;
 }
 
-.sp_navbar_container {
-  position: absolute;
-  bottom: -40px;
-  left: 16px;
-}
-.sp_navbar_title {
-  color: blue;
-  font-size: 0.8rem;
-  border-bottom: 1px solid blue;
-  cursor: pointer;
+.delbtncontainer {
+  margin: 1rem 0 0.2rem 0;
 }
 
-.navlink {
-  display: flex;
-  align-items: center;
+.sp_navbar_title {
+  display: none;
+}
+
+.drawer_toggle {
+  display: none;
+}
+.sp_navbar_x {
+  display: none;
 }
 
 @media screen and (max-width: 1024px) {
+  .drawer_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の背景 */
+    z-index: 9;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .drawer_toggle:checked ~ .drawer_background {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .drawer {
+    width: 70%;
+    min-width: 450px;
+    height: 100vh;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .drawer_toggle:checked ~ .drawer_background > .drawer {
+    transform: translateX(0);
+  }
+  .sp_navbar_x {
+    display: block;
+    margin-left: auto;
+    margin-bottom: 10px;
+    color: black;
+  }
+
+  .sp_navbar_title {
+    display: block;
+    color: blue;
+    font-size: 0.8rem;
+    border-bottom: 1px solid blue;
+    cursor: pointer;
+    position: absolute;
+    bottom: -40px;
+    left: 16px;
+  }
   .navbar {
     margin-top: 1rem;
   }
-  .delbtncontainer {
-    margin-top: 1rem;
+}
+
+@media screen and (max-width: 450px) {
+  .drawer {
+    min-width: 100%;
+    width: 100%;
   }
 }

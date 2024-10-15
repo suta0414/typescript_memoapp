@@ -1,17 +1,15 @@
 import { Button, Flex, Modal } from "@mantine/core";
 import classes from "./BtnProps.module.css";
 import { useDisclosure } from "@mantine/hooks";
-import { NextPage } from "next";
-import { DeleteSubmit } from "@/types";
 import { IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
 
-type BtnProps = {
+type BtnFnc = {
   state: string | string[];
-  fnc: DeleteSubmit;
+  fnc: (idList?: string | object) => void;
   type: string;
 };
 
-export const BtnFnc: NextPage<BtnProps> = ({ state, fnc, type }) => {
+export const BtnFnc: React.FC<BtnFnc> = ({ state, fnc, type }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   // まとめて削除

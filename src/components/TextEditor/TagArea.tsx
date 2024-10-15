@@ -1,8 +1,7 @@
 import { TagsInput } from "@mantine/core";
 import classes from "./TextEditor.module.css";
 import { Dispatch, SetStateAction } from "react";
-import { NextPage } from "next";
-import { BtnFnc } from "../BtnProps";
+import { BtnFnc } from "../BtnFnc";
 
 type TagAreaType = {
   Tag: {
@@ -16,7 +15,7 @@ type TagAreaType = {
 };
 
 // タグ部分
-export const TagArea: NextPage<TagAreaType> = ({
+export const TagArea: React.FC<TagAreaType> = ({
   Tag,
   tagList,
   id,

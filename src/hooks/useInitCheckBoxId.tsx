@@ -1,16 +1,29 @@
-import { CheckedProps, checkedState, Items } from "@/types";
 import { useEffect, useState } from "react";
-import { filteredItems } from "./filteredItems";
+import { filteredItems } from "./FilteredItems";
 
-type initCheckBoxIdProps = (ListItems: Items[]) => CheckedProps;
+type Items = {
+  title?: string;
+  text?: string;
+  tags?: string[];
+  id: string;
+};
+
+type CheckedProps = {
+  checkedState: { [key: string]: boolean };
+  setCheckedState: React.Dispatch<
+    React.SetStateAction<{ [key: string]: boolean }>
+  >;
+};
+
+type InitCheckBoxIdProps = (ListItems: Items[]) => CheckedProps;
 
 // チェックボックスのIDを初期化する
-export const useInitCheckBoxId: initCheckBoxIdProps = (ListItems) => {
+export const useInitCheckBoxId: InitCheckBoxIdProps = (ListItems) => {
   // ListItemのIDを使って初期化する
   const initialCheckedState = ListItems.reduce((acc, ListItem) => {
     acc[ListItem.id] = false;
     return acc;
-  }, {} as checkedState);
+  }, {} as { [key: string]: boolean });
   const [checkedState, setCheckedState] = useState(initialCheckedState);
 
   useEffect(() => {

@@ -6,7 +6,7 @@ export const HomeHeaderMenu = () => {
     <nav>
       <ul className={classes.navmenu}>
         <li>
-          <Link href={`/memoindex`}>メモ一覧</Link>
+          <Link href={`/memo_index`}>メモ一覧</Link>
         </li>
       </ul>
     </nav>
@@ -31,7 +31,7 @@ export const IndHeaderMenu = () => {
           <Link href={`/`}>編集ページ</Link>
         </li>
         <li>
-          <Link href={`/memoindex`}>メモ一覧</Link>
+          <Link href={`/memo_index`}>メモ一覧</Link>
         </li>
       </ul>
     </nav>

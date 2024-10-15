@@ -1,6 +1,5 @@
 import { Textarea } from "@mantine/core";
 import classes from "./TextEditor.module.css";
-import { NextPage } from "next";
 import { Dispatch, SetStateAction } from "react";
 
 type TextAreaType = {
@@ -11,7 +10,7 @@ type TextAreaType = {
 };
 
 // テキスト部分
-export const TextArea: NextPage<TextAreaType> = ({ Sentence }) => {
+export const TextArea: React.FC<TextAreaType> = ({ Sentence }) => {
   const { sentence, setSentence } = Sentence;
   return (
     <div className={classes.editor}>
