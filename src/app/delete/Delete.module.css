@@ -1,0 +1,19 @@
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+.delete_link {
+  margin-top: 20px;
+  color: blue;
+  position: relative;
+}
+.delete_link::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  display: inline-block;
+  background-color: blue;
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+}
