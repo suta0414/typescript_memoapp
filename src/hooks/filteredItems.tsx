@@ -20,7 +20,7 @@ const full_half = (str: string) => {
 export const filteredItems: FilteredItemsType = (ListItems, searchValue) => {
   // 全角を半角に変換
   searchValue = full_half(searchValue);
-  // console.log(ListItems);
+
   const Lists = ListItems.filter((ListItem) => {
     if (!ListItem.title) return true;
     // 全角を半角に変換

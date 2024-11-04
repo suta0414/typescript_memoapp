@@ -2,19 +2,22 @@ import { Button, Flex, Modal } from "@mantine/core";
 import classes from "./BtnProps.module.css";
 import { useDisclosure } from "@mantine/hooks";
 import { IconDeviceFloppy, IconTrash } from "@tabler/icons-react";
+import { useState } from "react";
 
 type BtnFnc = {
   state: string | string[];
-  fnc: (idList?: string | object) => void;
+  fnc: () => void;
   type: string;
 };
 
 export const BtnFnc: React.FC<BtnFnc> = ({ state, fnc, type }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
+  const [checkState, setrCheckState] = useState(true);
+
   // まとめて削除
   if (type === "sum") {
-    if (state && state.length === 0) {
+    if ((state && state.length === 0) || !checkState) {
       return (
         <div>
           <Button
@@ -68,6 +71,7 @@ export const BtnFnc: React.FC<BtnFnc> = ({ state, fnc, type }) => {
                 className={classes.addbtn}
                 onClick={() => {
                   fnc();
+                  setrCheckState(false);
                   close();
                 }}
               >

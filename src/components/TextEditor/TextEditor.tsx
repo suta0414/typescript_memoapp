@@ -1,6 +1,6 @@
 import classes from "./TextEditor.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import React from "react";
 import { TitleErea } from "./TitleErea";
 import { TextArea } from "./TextArea";
@@ -11,7 +11,7 @@ type SendItems = {
   title?: string;
   text?: string;
   tags?: string[];
-  id?: string;
+  id: string;
 };
 
 type AddItemList = (ItemList: {
@@ -24,12 +24,13 @@ type AddItemList = (ItemList: {
 type TextEditorProps = {
   addItemList: AddItemList;
   resetContent: () => void;
-  deleteSubmit: (idList?: string | object) => void;
-  sendItems: SendItems;
+  deleteSubmit: (idList: string | object) => void;
+  sendItems: SendItems | undefined;
   itemTagList: {
     tagList: string[];
     setTagList: React.Dispatch<React.SetStateAction<string[]>>;
   };
+  individualId: string | null;
 };
 
 export const TextEditor: React.FC<TextEditorProps> = ({
@@ -38,14 +39,16 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   resetContent,
   deleteSubmit,
   itemTagList,
+  individualId,
 }) => {
   const [titleValue, setTitleValue] = useState("");
-  const [tagValue, setTagValue] = useState([""]);
+  const [tagValue, setTagValue] = useState<string[]>([]);
   const [sentence, setSentence] = useState("");
-
   const [id, setId] = useState("");
 
   const { tagList, setTagList } = itemTagList;
+  const [checkId, setCheckId] = useState(individualId);
+  const [prevSendItems, setprevSendItems] = useState(sendItems);
 
   // 新規作成をクリックしたとき
   const resetbutton = () => {
@@ -80,12 +83,26 @@ export const TextEditor: React.FC<TextEditorProps> = ({
   };
 
   // Navbarをクリックしたとき
-  useEffect(() => {
-    setTitleValue(sendItems.title || "");
-    setSentence(sendItems.text || "");
-    setTagValue(sendItems.tags || []);
-    setId(sendItems.id || "");
-  }, [sendItems]);
+  if (sendItems !== prevSendItems) {
+    if (sendItems === undefined) return;
+    setprevSendItems(sendItems);
+
+    setTitleValue(sendItems.title ? sendItems.title : "");
+    setSentence(sendItems.text ? sendItems.text : "");
+    setTagValue(sendItems.tags ? sendItems.tags : []);
+    setId(sendItems.id ? sendItems.id : "");
+  }
+
+  // 個別ページからのアクセス時
+  if (checkId) {
+    setCheckId(null);
+
+    if (sendItems === undefined) return;
+    setTitleValue(sendItems.title ? sendItems.title : "");
+    setSentence(sendItems.text ? sendItems.text : "");
+    setTagValue(sendItems.tags ? sendItems.tags : []);
+    setId(sendItems.id ? sendItems.id : "");
+  }
 
   return (
     <div className={classes.container}>

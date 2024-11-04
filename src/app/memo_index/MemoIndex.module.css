@@ -37,10 +37,6 @@
   max-width: 300px;
   min-width: 250px;
 }
-/* .carditem {
-  height: 200px;
-  width: inherit;
-} */
 .cardtitle {
   text-align: center;
   word-break: break-all;
@@ -62,6 +58,7 @@
 .nomemo {
   text-align: center;
   font-size: 30px;
+  margin-top: 30px;
 }
 
 @media screen and (max-width: 1024px) {

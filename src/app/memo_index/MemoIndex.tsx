@@ -4,9 +4,9 @@ import { Title, Card, Text } from "@mantine/core";
 
 import Link from "next/link";
 import { filteredItems } from "@/src/hooks/FilteredItems";
-import { Suspense, useEffect, useState } from "react";
+import { useState } from "react";
 
-import Loading from "../loading";
+import useLocalStorageState from "use-local-storage-state";
 type Items = {
   title?: string;
   text?: string;
@@ -15,18 +15,24 @@ type Items = {
 };
 
 type ItemPropsType = {
-  items: Items[];
   searchValue: string;
 };
 
-export const MemoIndex: React.FC<ItemPropsType> = ({ items, searchValue }) => {
-  const [showItems, setShowItems] = useState<Items[]>([]);
+export const MemoIndex: React.FC<ItemPropsType> = ({ searchValue }) => {
+  const [items, setItems] = useLocalStorageState<Items[]>("ItemLists", {
+    defaultValue: [],
+  });
+  const [showItems, setShowItems] = useState<Items[]>(items);
 
-  useEffect(() => {
+  const [prevSearchValue, setPrevSearchValue] = useState(searchValue);
+
+  // 検索の際の処理
+  if (searchValue !== prevSearchValue) {
+    setPrevSearchValue(searchValue);
     setShowItems(filteredItems(items, searchValue));
-  }, [items, searchValue]);
+  }
 
-  const memo_Index = () => {
+  const MemoIndex = () => {
     return showItems.map((item) => {
       return (
         <div key={item.id} className={classes.card}>
@@ -69,7 +75,11 @@ export const MemoIndex: React.FC<ItemPropsType> = ({ items, searchValue }) => {
 
   return (
     <div>
-      <Suspense fallback={<Loading />}>{memo_Index()}</Suspense>
+      {items.length > 0 ? (
+        <div className={classes.card_wrapper}>{MemoIndex()}</div>
+      ) : (
+        <p className={classes.nomemo}>メモがありません</p>
+      )}
     </div>
   );
 };

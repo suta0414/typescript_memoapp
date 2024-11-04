@@ -2,30 +2,14 @@
 
 import classes from "./MemoIndex.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MemoIndex } from "./MemoIndex";
+import { SearchComponent } from "@/src/components/SearchBox";
 import Link from "next/link";
 import { IconPencilPlus } from "@tabler/icons-react";
-import { SearchComponent } from "@/src/components/SearchBox";
-import { firstLocalStorage } from "@/src/hooks/FirstLocalStorage";
-
-type Items = {
-  title?: string;
-  text?: string;
-  tags?: string[];
-  id: string;
-};
 
 const PageIndex: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
-
-  const [items, setItems] = useState<Items[]>([]);
-
-  // 初回レンダリング時にlocalStorageからデータを取得
-  useEffect(() => {
-    const parsedItems = firstLocalStorage();
-    setItems(parsedItems);
-  }, []);
 
   return (
     <div className={classes.container}>
@@ -43,13 +27,7 @@ const PageIndex: React.FC = () => {
       </div>
       <h2 className={classes.title}>メモ一覧</h2>
 
-      {items.length > 0 ? (
-        <div className={classes.card_wrapper}>
-          <MemoIndex items={items} searchValue={searchValue}></MemoIndex>
-        </div>
-      ) : (
-        <p className={classes.nomemo}>メモがありません</p>
-      )}
+      <MemoIndex searchValue={searchValue}></MemoIndex>
     </div>
   );
 };

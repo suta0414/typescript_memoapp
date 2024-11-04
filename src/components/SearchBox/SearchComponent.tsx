@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction } from "react";
 
 import classes from "./Search.module.css";
 import { TextInput, rem } from "@mantine/core";
-import { inputSearchValue } from "@/src/hooks/InputSearchValue";
 
 type SearchComponent = {
   searchValue: string;
@@ -24,9 +23,7 @@ export const SearchComponent: React.FC<SearchComponent> = ({
         placeholder="タイトル検索"
         value={searchValue}
         className={classes.textinput}
-        onChange={(event) =>
-          inputSearchValue(event.currentTarget.value, setSearchValue)
-        }
+        onChange={(event) => setSearchValue(event.currentTarget.value)}
         rightSection={
           <IconSearch
             style={{ width: rem(16), height: rem(16) }}

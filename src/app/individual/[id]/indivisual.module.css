@@ -8,7 +8,6 @@
   padding: 10px;
   background-color: #0099ff;
   color: white;
-  place-items: center;
 }
 .left_titleerea {
   flex-grow: 4;
@@ -45,7 +44,7 @@
   align-content: center;
 }
 .delete {
-  margin: 6px 10px 60px 0;
+  margin: 6px 10px 0 0;
   display: flex;
   justify-content: end;
 }
@@ -59,7 +58,9 @@
   width: 20px;
   height: 20px;
 }
-
+.returnlink {
+  margin-top: 60px;
+}
 .arrowicon {
   margin-bottom: -6px;
 }

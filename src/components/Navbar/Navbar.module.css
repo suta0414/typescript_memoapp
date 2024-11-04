@@ -73,6 +73,7 @@
   .drawer_toggle:checked ~ .drawer_background > .drawer {
     transform: translateX(0);
   }
+
   .sp_navbar_x {
     display: block;
     margin-left: auto;

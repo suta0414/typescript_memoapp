@@ -3,14 +3,15 @@
 import { MantineProvider } from "@mantine/core";
 import classes from "./page.module.css";
 import { TextEditor } from "../components/TextEditor";
-import { useEffect, useState } from "react";
+import { Navbar } from "../components/Navbar";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { firstLocalStorage } from "../hooks/FirstLocalStorage";
-import { Navbar } from "../components/Navbar/Navbar";
+
+import useLocalStorageState from "use-local-storage-state";
 
 type SendEditor = (item: Items) => void;
 
-type DeleteSubmit = (idList?: string | object) => void;
+type DeleteSubmit = (idList: string | object) => void;
 
 type ResetContent = () => void;
 
@@ -29,71 +30,48 @@ type AddItemList = (ItemList: {
 }) => void;
 
 const Home: React.FC = () => {
-  const [items, setItems] = useState<Items[]>([]);
-  const [content, setContent] = useState({});
+  const [content, setContent] = useState<Items>();
   const [tagList, setTagList] = useState<string[]>([]);
 
-  const [isClient, setIsClient] = useState(false); // クライアント側判定
-  const [isLoaded, setIsLoaded] = useState(false); // localStorageが読み込まれたかを判定
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const individualId = searchParams.get("id");
 
-  // クライアントサイドでのみ実行
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const [items, setItems] = useLocalStorageState<Items[]>("ItemLists", {
+    defaultValue: [],
+  });
 
-  // localStorageのデータを取得
-  useEffect(() => {
-    if (isClient && !isLoaded) {
-      // 読み込みが完了していない場合のみ実行
-      const parsedItems = firstLocalStorage();
-      if (parsedItems) {
-        try {
-          setItems(parsedItems);
-          // console.log("Items loaded from localStorage:", parsedItems);
+  const [prevItems, setPrevItems] = useState<Items[]>();
 
-          // タグのリストを作成
-          const allTags = parsedItems.reduce((acc: string[], item) => {
-            if (item.tags && item.tags.length > 0) {
-              acc.push(...item.tags);
-            }
-            return acc;
-          }, []);
-
-          setTagList((prevTagList) => {
-            const newTagList = [...prevTagList, ...allTags];
-            return [...new Set(newTagList)]; // 重複を排除
-          });
-
-          // 個別ページからのアクセス時
-          if (parsedItems && id) {
-            const foundItem = parsedItems.find((item) => item.id === id);
-            if (foundItem) {
-              setContent(foundItem);
-            }
-          }
-
-          setIsLoaded(true); // 読み込み完了をマーク
-        } catch (error) {
-          console.error("Error parsing localStorage data:", error);
-        }
+  // itemsの変更時
+  if (items !== prevItems) {
+    setPrevItems(items);
+    // タグのリストを作成
+    const allTags = items.reduce((acc: string[], item) => {
+      if (item.tags && item.tags.length > 0) {
+        acc.push(...item.tags);
       }
-    }
-  }, [isClient, id, isLoaded]);
+      return acc;
+    }, []);
 
-  // itemsが変更されたときのみlocalStorageを更新
-  useEffect(() => {
-    if (isClient && isLoaded && items.length > 0) {
-      window.localStorage.setItem("ItemList", JSON.stringify(items));
+    setTagList((prevTagList) => {
+      const newTagList = [...prevTagList, ...allTags];
+      return [...new Set(newTagList)]; // 重複を排除
+    });
+  }
+
+  // 個別ページからのアクセス時
+  if (individualId && !content) {
+    const foundItem = items.find((item) => item.id === individualId);
+    if (foundItem) {
+      setContent(foundItem);
     }
-  }, [items, isClient, isLoaded]); // itemsが変更されるたびに保存
+  }
 
   // エディタの内容をitemsに追加
   const addItemList: AddItemList = (ItemList) => {
     const { titleValue, sentence, tagValue, ID } = ItemList;
     const index = items.findIndex((item) => item.id === ID);
-    setContent("");
+    setContent({} as Items);
     if (index !== -1) {
       // IDが存在する場合、そのオブジェクトを上書
       setItems((prevItems) =>
@@ -127,12 +105,12 @@ const Home: React.FC = () => {
 
   // 新規作成を押したとき
   const resetContent: ResetContent = () => {
-    setContent("");
+    setContent({} as Items);
   };
 
   // itemsから削除
   const deleteSubmit: DeleteSubmit = (idList) => {
-    setContent("");
+    setContent({} as Items);
     //まとめて削除の時
     if (Array.isArray(idList) && typeof idList === "object") {
       setItems((prevItems) => {
@@ -167,6 +145,7 @@ const Home: React.FC = () => {
           resetContent={resetContent}
           deleteSubmit={deleteSubmit}
           itemTagList={{ tagList, setTagList }}
+          individualId={individualId}
         />
       </div>
     </MantineProvider>

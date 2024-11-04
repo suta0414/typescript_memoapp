@@ -1,13 +1,12 @@
 "use client";
 
-import classes from "./indivisual.module.css";
+import classes from "./Indivisual.module.css";
 
 import { Button, Flex, Modal, Text, Title } from "@mantine/core";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { IconEdit, IconArrowLeft, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import { firstLocalStorage } from "@/src/hooks/FirstLocalStorage";
+import useLocalStorageState from "use-local-storage-state";
 
 type Props = {
   params: {
@@ -25,82 +24,73 @@ type Items = {
 const Indivisual = ({ params }: Props) => {
   const { id } = params;
 
-  const [items, setItems] = useState<Items[]>();
-  const [selectedItem, setSelectedItem] = useState<Items[]>();
   const [opened, { open, close }] = useDisclosure(false);
 
-  // 初回レンダリング時にlocalStorageからデータを取得
-  useEffect(() => {
-    const parsedItems = firstLocalStorage();
-    setItems(parsedItems);
-  }, []);
+  const [items, setItems] = useLocalStorageState<Items[]>("ItemLists", {
+    defaultValue: [],
+  });
 
   // 特定のIDを持つアイテムを取得
-  useEffect(() => {
-    if (items) {
-      const foundItem = Object.values(items).find((item) => item.id === id);
-      setSelectedItem(foundItem ? [foundItem] : undefined);
-    }
-  }, [id, items]);
+  const selectedItem = Object.values(items).find((item) => item.id === id);
 
   // アイテムを削除
   const deleteItem = () => {
-    if (items) {
-      const updatedItem = items.filter((item) => item.id !== id);
-      localStorage.setItem("ItemList", JSON.stringify(updatedItem));
-    }
+    const updatedItem = items.filter((item) => item.id !== id);
+    setItems(updatedItem);
   };
 
-  return (
-    <div className={classes.container}>
-      {selectedItem && selectedItem.length === 1 ? (
-        <div>
-          <div className={classes.titleerea}>
-            <div className={classes.left_titleerea}>
-              {selectedItem[0].title ? (
-                <Title order={2} lineClamp={1} className={classes.title}>
-                  {selectedItem[0].title}
-                </Title>
-              ) : (
-                ""
-              )}
-            </div>
+  const Content = () => {
+    return (
+      <div>
+        {selectedItem ? (
+          <div>
+            <div className={classes.titleerea}>
+              <div className={classes.left_titleerea}>
+                {selectedItem.title ? (
+                  <Title order={2} lineClamp={1} className={classes.title}>
+                    {selectedItem.title}
+                  </Title>
+                ) : (
+                  ""
+                )}
+              </div>
 
-            <div className={classes.edit}>
-              <Link href={`/?id=${id}`}>
-                <IconEdit className={classes.edit_icon} />
-                編集
-              </Link>
+              <div className={classes.edit}>
+                <Link href={`/?id=${id}`}>
+                  <IconEdit className={classes.edit_icon} />
+                  編集
+                </Link>
+              </div>
             </div>
+            <div className={classes.tag}>
+              {selectedItem.tags
+                ? selectedItem.tags.map((tag) => (
+                    <Text size="sm" className={classes.tag_content} key={tag}>
+                      #{tag}
+                    </Text>
+                  ))
+                : ""}
+            </div>
+            <div className={classes.text}>
+              {selectedItem.text ? <p>{selectedItem.text}</p> : ""}
+            </div>
+            <div className={classes.delete}>
+              <div className={classes.deletebtn} onClick={open}>
+                <IconTrash className={classes.deleteicon} />
+                <p>削除</p>
+              </div>
+            </div>
+            {DeleteModal()}
           </div>
-          <div className={classes.tag}>
-            {selectedItem[0].tags
-              ? selectedItem[0].tags.map((tag) => (
-                  <Text size="sm" className={classes.tag_content} key={tag}>
-                    #{tag}
-                  </Text>
-                ))
-              : ""}
-          </div>
-          <div className={classes.text}>
-            {selectedItem[0].text ? <p>{selectedItem[0].text}</p> : ""}
-          </div>
-        </div>
-      ) : (
-        <p>表示する情報がありません</p>
-      )}
-      <div className={classes.delete} onClick={open}>
-        <div className={classes.deletebtn}>
-          <IconTrash className={classes.deleteicon} />
-          <p>削除</p>
-        </div>
+        ) : (
+          <p>表示する情報がありません</p>
+        )}
       </div>
+    );
+  };
 
-      <Link href={`/memoindex`} className={classes.returnlink}>
-        <IconArrowLeft stroke={2} className={classes.arrowicon} />
-        メモ一覧
-      </Link>
-
+  const DeleteModal = () => {
+    return (
       <div>
         <Modal
           opened={opened}
@@ -135,6 +125,18 @@ const Indivisual = ({ params }: Props) => {
             </Link>
           </Flex>
         </Modal>
+      </div>
+    );
+  };
+
+  return (
+    <div className={classes.container}>
+      {Content()}
+      <div className={classes.returnlink}>
+        <Link href={`/memo_index`}>
+          <IconArrowLeft stroke={2} className={classes.arrowicon} />
+          メモ一覧
+        </Link>
       </div>
     </div>
   );

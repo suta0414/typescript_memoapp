@@ -4,9 +4,8 @@ import { useRef, useState } from "react";
 import { SearchComponent } from "../SearchBox/SearchComponent";
 import { Itemlinks } from "./ItemLinks";
 import { filteredItems } from "@/src/hooks/FilteredItems";
-import { useInitCheckBoxId } from "@/src/hooks/useInitCheckBoxId";
+import { InitCheckBoxId } from "@/src/hooks/InitCheckBoxId";
 import { BtnFnc } from "../BtnFnc";
-import { trueItem } from "@/src/hooks/TrueItem";
 
 type Items = {
   title?: string;
@@ -18,7 +17,7 @@ type Items = {
 type NavbarType = {
   sendEditor: (item: Items) => void;
   ListItems: Items[];
-  deleteSubmit: (idList?: string | object) => void;
+  deleteSubmit: (idList: string | object) => void;
 };
 
 export const Navbar: React.FC<NavbarType> = ({
@@ -27,20 +26,30 @@ export const Navbar: React.FC<NavbarType> = ({
   deleteSubmit,
 }) => {
   const [searchValue, setSearchValue] = useState("");
-  const { checkedState, setCheckedState } = useInitCheckBoxId(ListItems);
-  const checkboxRef = useRef<HTMLInputElement>(null);
+  const [items, setItems] = useState<Items[]>(ListItems);
+
+  const navbarToggleRef = useRef<HTMLInputElement>(null);
+
+  const initialCheckedState = InitCheckBoxId(ListItems);
+  const [checkedState, setCheckedState] = useState(initialCheckedState);
+
+  // ListItems の変更時に items と checkedState を更新
+  if (items !== ListItems) {
+    setItems(ListItems);
+    setCheckedState(initialCheckedState);
+  }
 
   // チェックが入ったものだけを抽出
-  const trueCheckItem = trueItem(checkedState);
+  const trueCheckItem = Object.entries(checkedState)
+    .filter(([key, value]) => value)
+    .map(([key, value]) => key);
 
-  // 背景をクリックした際にチェックボックスを解除する
-  const handleBackgroundClick = (
+  // Navbarを閉じる処理
+  const handleCloseClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (e.target === e.currentTarget) {
-      if (checkboxRef.current) {
-        checkboxRef.current.checked = false; // チェックボックスを解除
-      }
+    if (navbarToggleRef.current) {
+      navbarToggleRef.current.checked = false; // チェックボックスを解除
     }
   };
 
@@ -49,17 +58,14 @@ export const Navbar: React.FC<NavbarType> = ({
       <input
         type="checkbox"
         id="drawer_toggle"
-        ref={checkboxRef}
+        ref={navbarToggleRef}
         className={classes.drawer_toggle}
       />
       <label htmlFor="drawer_toggle" className={classes.sp_navbar_title}>
         タイトル一覧を表示
       </label>
 
-      <div
-        className={classes.drawer_background}
-        onClick={handleBackgroundClick}
-      >
+      <div className={classes.drawer_background} onClick={handleCloseClick}>
         <div className={classes.drawer}>
           <div className={classes.sp_navbar_x}>
             <label htmlFor="drawer_toggle">×</label>
@@ -71,7 +77,9 @@ export const Navbar: React.FC<NavbarType> = ({
           <div className={classes.delbtncontainer}>
             <BtnFnc
               state={trueCheckItem}
-              fnc={() => deleteSubmit(trueCheckItem)}
+              fnc={() => {
+                deleteSubmit(trueCheckItem);
+              }}
               type="sum"
             ></BtnFnc>
           </div>
@@ -80,6 +88,7 @@ export const Navbar: React.FC<NavbarType> = ({
               sendEditor={sendEditor}
               filteredItems={filteredItems(ListItems, searchValue)}
               checked={{ checkedState, setCheckedState }}
+              handleCloseClick={handleCloseClick}
             ></Itemlinks>
           </nav>
         </div>

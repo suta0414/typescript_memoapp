@@ -1,2 +1,1 @@
-export { NavbarPC } from "./NavbarPC";
-export { NavbarSP } from "./NavbarSP";
+export { Navbar } from "./Navbar";

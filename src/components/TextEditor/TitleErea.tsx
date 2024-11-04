@@ -11,7 +11,7 @@ type TitleEreaType = {
     setTitleValue: Dispatch<SetStateAction<string>>;
   };
   resetbutton: () => void;
-  deletebutton: (idList?: string | object) => void;
+  deletebutton: () => void;
   id: string;
 };
 

@@ -8,7 +8,7 @@ const Delete = () => {
     <div className={classes.container}>
       <h2>削除しました</h2>
       <Flex justify="center" align="center" gap="lg">
-        <Link href={"/memoindex"} className={classes.delete_link}>
+        <Link href={"/memo_index"} className={classes.delete_link}>
           メモ一覧ページへ
         </Link>
         <Link href={"/"} className={classes.delete_link}>
