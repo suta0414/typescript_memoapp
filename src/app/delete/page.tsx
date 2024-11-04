@@ -1,4 +1,4 @@
-import classes from "./delete.module.css";
+import classes from "./Delete.module.css";
 
 import { Flex } from "@mantine/core";
 import Link from "next/link";
